@@ -24,7 +24,6 @@ class UserModel {
   private randomId(): number {
     const randomIdNumber =
       Math.floor(Math.random() * (10000000 - 9000000 + 1)) + 9000000; // Returns a random integer from 9000000 to 10000000.
-    console.log("random: ", randomIdNumber);
     return randomIdNumber;
   }
 

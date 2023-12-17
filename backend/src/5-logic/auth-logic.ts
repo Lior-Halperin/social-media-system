@@ -17,6 +17,8 @@ async function register(user: UserModel): Promise<string> {
     const sql = `INSERT INTO users(firstName, lastName, email, id, tal, password, role)
     VALUES(?,?,?,?,?,?,?)`;
 
+        // Todo - hash password
+        
     await dal.execute(sql,[user.firstName, user.lastName, user.email, user.id, user.tal, user.password, user.role] );
 
     // Generate token:
