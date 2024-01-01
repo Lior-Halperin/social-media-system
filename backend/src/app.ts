@@ -1,14 +1,16 @@
 import express, { NextFunction, Request, Response } from "express";
+import config from "./2-utils/config";
 import catchAll from "./3-middlewares/catch-all";
 import logRequest from "./3-middlewares/log-request";
 import authController from "./6-controllers/auth-controller";
+import uploadController from "./6-controllers/upload-controller";
 import { RouteNotFound } from "./4-models/errors-model";
-import config from "./2-utils/config";
+import cors from "cors";
 
 const server = express();
 
 //  Backend approval to browse AJAX to backend API
-// if (config.isDevelopment) expressServer.use(cors());
+if (process.env.NODE_ENV === "development") server.use(cors());
 
 // Tell express to extract json object from request body into request.body variable:
 server.use(express.json());
@@ -18,7 +20,8 @@ server.use(logRequest);
 // server.use(verifyLoggedIn);
 
 // Transfer requests to the controllers:
-// server.use("/api", authController);
+server.use("/api", authController);
+server.use("/api",uploadController);
 
 //If route not found:
 server.use("*", (request: Request, response: Response, next: NextFunction) => {
