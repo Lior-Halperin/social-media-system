@@ -3,7 +3,7 @@ import config from "./2-utils/config";
 import catchAll from "./3-middlewares/catch-all";
 import logRequest from "./3-middlewares/log-request";
 import authController from "./6-controllers/auth-controller";
-import uploadController from "./6-controllers/upload-controller";
+import citiesController from "./6-controllers/cities-controller";
 import { RouteNotFound } from "./4-models/errors-model";
 import cors from "cors";
 
@@ -21,7 +21,7 @@ server.use(logRequest);
 
 // Transfer requests to the controllers:
 server.use("/api", authController);
-server.use("/api",uploadController);
+server.use("/api",citiesController);
 
 //If route not found:
 server.use("*", (request: Request, response: Response, next: NextFunction) => {
