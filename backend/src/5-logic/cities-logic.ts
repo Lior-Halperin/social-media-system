@@ -24,7 +24,7 @@ async function addCity(city: CityModel): Promise<CityModel> {
 
 async function updateFullCities(cities: CityModel[]): Promise<any> {
   try {
-    
+
     // step-1: Perform validation for all cities:
     const citiesList = new CitiesListModel(cities);
 
@@ -32,10 +32,17 @@ async function updateFullCities(cities: CityModel[]): Promise<any> {
       throw new ValidationError(JSON.stringify(citiesList.errorsList));
     }
 
-    // step-2: Update the database with the cities
+    const cityIdsList: number[] = cities.map((city) => city.cityId)
+
+    // step-2: Checking duplicate cities against the DB based on cityId.
+    if((await checkCitiesExist(cityIdsList)).length > 0 ){
+        throw new ValidationError(`The cities with the ID in the above list already exist in the system: ${cityIdsList}`)
+    }
+
+    // step-3: Update the database with the cities
     const promises = cities.map(async (city) => {
       try {
-        // step-2.1: Check if the city does not already exist in the DB
+        // step-3.1: Check if the city does not already exist in the DB
         const getCity = await getOneCityById(city.cityId);
         const cityFromDB: CityModel = getCity[0];
 
@@ -48,7 +55,7 @@ async function updateFullCities(cities: CityModel[]): Promise<any> {
             cityFromDB.cityId + cityFromDB.englishName + cityFromDB.hebrewName
           );
 
-        // step-2.2: There has been a change in the details of the city
+        // step-3.2: There has been a change in the details of the city
         const isCityDetailsChanged: boolean =
           hashCityFromRequest !== hashCityFromDB;
 
@@ -97,6 +104,19 @@ async function updatePartialCity(city: CityModel): Promise<void> {
   }
 }
 
+async function checkCitiesExist(cities: number[]): Promise<number[]> {
+  try {
+    const query = "SELECT cityId FROM cities WHERE cityId IN (?)";
+    const existingCities = await dal.execute(query, [cities]); //  The result will be a list of cityIds that exist in the database.
+
+    const existingCityIds = existingCities.map((city) => city.cityId);
+
+    // Return the existing cities
+    return existingCityIds;
+  } catch (err: any) {
+    throw err;
+  }
+}
 export default {
   updateFullCities,
   getOneCityById,
