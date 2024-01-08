@@ -6,7 +6,7 @@ import CityModel from '../4-models/city-model';
 import fs from "fs/promises";
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' }); // The { dest: 'uploads/' } configuration tells Multer to save uploaded files in a directory named uploads in your project's root folder.
+const upload = multer({ dest: './src/1-assets/uploads/cities' }); // The { dest: 'uploads/' } configuration tells Multer to save uploaded files in a directory named uploads in your project's root folder.
 
 // POST http://localhost:3001/api/upload/cities
 router.post('/upload-file/cities', upload.single('excelFile'), async (request: Request, response: Response, next: NextFunction) => { // upload.single('excelFile'): This is Multer middleware configured to handle a single file upload. The file is expected to come with the form field name excelFile. This middleware processes the incoming file and attaches it to the req (request) object.
