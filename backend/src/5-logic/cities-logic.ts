@@ -3,7 +3,6 @@ import dal from "../2-utils/dal";
 import CitiesListModel from "../4-models/citiesList-model";
 import CityModel from "../4-models/city-model";
 import { ValidationError } from "../4-models/errors-model";
-import fs from "fs/promises";
 
 async function addCity(city: CityModel): Promise<CityModel> {
   try {
@@ -25,20 +24,18 @@ async function addCity(city: CityModel): Promise<CityModel> {
 
 async function updateFullCities(cities: CityModel[]): Promise<any> {
   try {
-    // step-1: Todo - deleting upload fille:
-    await fs.rm("./uploads", { recursive: true, force: true });
-
-    // step-2: Perform validation for all cities:
+    
+    // step-1: Perform validation for all cities:
     const citiesList = new CitiesListModel(cities);
 
     if (citiesList.errorsList.length > 0) {
       throw new ValidationError(JSON.stringify(citiesList.errorsList));
     }
 
-    // step-3: Update the database with the cities
+    // step-2: Update the database with the cities
     const promises = cities.map(async (city) => {
       try {
-        // step-3.1: Check if the city does not already exist in the DB
+        // step-2.1: Check if the city does not already exist in the DB
         const getCity = await getOneCityById(city.cityId);
         const cityFromDB: CityModel = getCity[0];
 
@@ -51,7 +48,7 @@ async function updateFullCities(cities: CityModel[]): Promise<any> {
             cityFromDB.cityId + cityFromDB.englishName + cityFromDB.hebrewName
           );
 
-        // step-3.2: There has been a change in the details of the city
+        // step-2.2: There has been a change in the details of the city
         const isCityDetailsChanged: boolean =
           hashCityFromRequest !== hashCityFromDB;
 
