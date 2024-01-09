@@ -1,15 +1,18 @@
 import Joi from "joi";
 import { ValidationError } from "./errors-model";
+import cyber from "../2-utils/cyber";
 
 interface ICityModel {
   cityId: number;
   hebrewName: string;
   englishName: string;
+  hashDetails: string;
 }
 class CityModel {
   private _cityId: number;
   private _hebrewName: string;
   private _englishName: string;
+  private _hashDetails: string;
 
   public constructor(city: CityModel) {
     try {
@@ -17,6 +20,7 @@ class CityModel {
       this._cityId = city.cityId;
       this._englishName = city.englishName;
       this._hebrewName = city.hebrewName;
+      this._hashDetails = cyber.hash(city.cityId + city.englishName + city.hebrewName)
     } catch (err: any) {
       throw err;
     }
@@ -52,6 +56,11 @@ class CityModel {
         throw err
     }
   }
+
+  public get hashDetails(){
+    return this._hashDetails
+  }
+  
   private validation (property: keyof ICityModel | CityModel, value?: string | number) {
     try{
         const error = this.validatePostUploadCity(property,value)
