@@ -1,5 +1,6 @@
 import Joi from "joi";
 import CityModel from "./city-model";
+import cyber from "../2-utils/cyber";
 
 interface ICitiesListModel {
   citiesList: CityModel[];
@@ -12,6 +13,7 @@ class CitiesListModel {
   public constructor(cities: CityModel[]) {
     const errors = [];
     cities.forEach((city) => {
+        city.hashDetails = cyber.hash(city.cityId + city.englishName + city.hebrewName)
       const error: string = this.validatePostUploadCity(city);
       errors.length > 0 && errors.push({ cityId: city.cityId, massage: error });
     });

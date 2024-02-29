@@ -61,6 +61,9 @@ class CityModel {
     return this._hashDetails
   }
   
+  public set hashDetails(hash: string){
+   this.hashDetails = hash
+  }
   private validation (property: keyof ICityModel | CityModel, value?: string | number) {
     try{
         const error = this.validatePostUploadCity(property,value)
