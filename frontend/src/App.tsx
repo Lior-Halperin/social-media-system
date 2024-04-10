@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import styled, { ThemeProvider, DefaultTheme } from "styled-components";
+import GlobalStyle from "./Theme/globalStyle";
+import { Theme } from "./theme";
+import lightTheme from "./Theme/lightTheme";
+import darkTheme from "./Theme/darkTheme";
+import Splash from "./Views/Splash/Splash";
+import Routing from "./Components/Routing";
+import { StyledWrapper } from "./App.styled";
 
 function App() {
+    const [theme, setTheme] = React.useState<DefaultTheme>(darkTheme);
+
+    const toggleTheme = () => {
+      setTheme(theme === lightTheme ? darkTheme : lightTheme);
+    };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+        <StyledWrapper>
+        <Splash/>
+        <header>
+            heder
+            <button onClick={toggleTheme}>Toggle Theme</button>
+        </header>
+        <hr/>
+        < main>
+        <Routing/>
+        </main>
+        <hr/>
+        <footer>
+            footer
+        </footer>
+        </StyledWrapper>
+    </ThemeProvider>
   );
 }
 
