@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import logic from "../5-logic/donate-logic"
+import logic from "../5-logic/social-customer-logic"
 
 const router = express.Router();
 
@@ -8,10 +8,10 @@ router.get("/socialCustomer", async (request: Request, response: Response, next:
 
     try{
         
-        const donate = await logic.getAllDonate();
+        const socialCustomer = await logic.getAllSocialCustomer();
 
-        //Return all donate:
-        response.status(201).json(donate)
+        //Return all socialCustomer:
+        response.status(201).json(socialCustomer)
     }
     catch(err: any){
         next(err);
