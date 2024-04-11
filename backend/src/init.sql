@@ -15,7 +15,32 @@ CREATE TABLE cities (
     hashDetails VARCHAR(512)
 );
 
-CREATE TABLE donate (
-    donateId INT PRIMARY KEY, 
-    name VARCHAR(30),
+CREATE TABLE streets (
+    streetId INT NOT NULL, 
+    cityId INT ,
+    hebrewName VARCHAR(30),
+    englishName VARCHAR(50),
+    PRIMARY KEY (streetId),
+    FOREIGN KEY (cityId) REFERENCES cities(cityId)
+);
+
+CREATE TABLE socialCustomer (
+    customerId INT NOT NULL PRIMARY KEY, 
+    firstName VARCHAR(30),
+    lastName VARCHAR(30),
+    tal INT
+);
+
+CREATE TABLE addresses (
+    addressesId INT NOT NULL, 
+    customerId INT UNIQUE,
+    cityId INT UNIQUE,
+    streetId INT UNIQUE,
+    houseNumber VARCHAR(3),
+    apartmentNumber INT,
+    floor INT,
+    PRIMARY KEY (addressesId),
+    FOREIGN KEY (customerId) REFERENCES socialCustomer(customerId),
+    FOREIGN KEY (cityId) REFERENCES cities(cityId),
+    FOREIGN KEY (streetId) REFERENCES streets(streetId)
 );
