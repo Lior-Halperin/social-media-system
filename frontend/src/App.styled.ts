@@ -6,6 +6,7 @@ flex-direction: column;
  width: 100%;
  height: 100vh;
  background-color: ${(props)=> props.theme.colors.background};
+ color: ${(props)=> props.theme.colors.text};
 ` 
 
 

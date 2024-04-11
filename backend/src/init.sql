@@ -14,3 +14,8 @@ CREATE TABLE cities (
     englishName VARCHAR(50),
     hashDetails VARCHAR(512)
 );
+
+CREATE TABLE donate (
+    donateId INT PRIMARY KEY, 
+    name VARCHAR(30),
+);

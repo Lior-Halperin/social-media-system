@@ -4,7 +4,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 // import AdminRoute from "src/Views/Admin/AdminRoute";
 // import Role from "src/models/enums/role";
 
-const DonateListView = React.lazy(() => import("../Views/DonateListView/DonateListView"));
+const DonateListView = React.lazy(() => import("../Views/DonateListView/SocialCustomerListView"));
 
 // const AdminView = React.lazy(
 //   () => import("../Views/Admin/AdminView/AdminView")

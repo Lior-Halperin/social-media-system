@@ -7,7 +7,8 @@ async function updateFullCities(cities: CityModel[]): Promise<any> {
   try {
     // step-1: Perform validation for all cities:
     const citiesList = new CitiesListModel(cities);
-
+    
+   
     if (citiesList.errorsList.length > 0) {
       throw new ValidationError(JSON.stringify(citiesList.errorsList));
     }
