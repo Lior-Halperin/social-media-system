@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import logic from "../5-logic/social-customer-logic"
+import SocialCustomerModel from "../4-models/social-customer-model";
 
 const router = express.Router();
 
@@ -17,6 +18,19 @@ router.get("/socialCustomer", async (request: Request, response: Response, next:
         next(err);
     }
 });
+
+// POST http://localhost:3001/api/socialCustomer
+router.post('/socialCustomer', async (request: Request, response: Response, next: NextFunction)=> {
+    try{
+       const socialCustomer = new SocialCustomerModel(request.body)
+       const addedSocialCustomer = await logic.addSocialCustomer(socialCustomer)
+
+       response.json(addedSocialCustomer)
+    }
+    catch(err: any){
+        next(err)
+    }
+})
 
 export default router; // Export all routes from this controller.
 
