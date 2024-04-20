@@ -1,8 +1,6 @@
 export interface ISocialCustomerModel{
-    id:number;
-    name: string;
-    // serialNumber:number;
-    // tal: string;
-    // city: string;
-    // street: string;
+    customerId: number;
+    firstName: string;
+    lastName: string;
+    tal: number;
 }
