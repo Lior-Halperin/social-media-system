@@ -1,7 +1,7 @@
-import DonateTable from "src/Components/DonateTable/SocialCustomerTable";
+import SocialCustomerTable from "src/Components/SocialCustomerTable/SocialCustomerTable";
 import useSocialCustomer from "src/hooks/useSocialCustomer";
 
-function DonateListView(): JSX.Element {
+function SocialCustomerView(): JSX.Element {
   // Utilize the custom hook to access socialCustomers data and functionalities
   const {
     socialCustomer,
@@ -18,10 +18,9 @@ function DonateListView(): JSX.Element {
 
   return (
     <>
-      DonateTable
-      <DonateTable socialCustomer={socialCustomer} />
+      <SocialCustomerTable socialCustomer={socialCustomer} />
     </>
   );
 }
 
-export default DonateListView;
+export default SocialCustomerView;

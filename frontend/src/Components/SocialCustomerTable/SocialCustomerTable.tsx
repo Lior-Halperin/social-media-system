@@ -38,9 +38,9 @@ function SocialCustomerTable({ socialCustomer }: { socialCustomer: ISocialCustom
         </thead>
         <tbody>
           {socialCustomerState.map((socialCustomer, index) => (
-            <StyleTableRow key={socialCustomer.id || index}>
+            <StyleTableRow key={socialCustomer.customerId || index}>
               {tableHeaders.map((header) => (
-                <StyledTableData key={`${socialCustomer.id}-${header}`}>
+                <StyledTableData key={`${socialCustomer.customerId}-${header}`}>
                   {socialCustomer[header as keyof ISocialCustomerModel]}
                 </StyledTableData>
               ))}
