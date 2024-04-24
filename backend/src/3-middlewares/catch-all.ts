@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import { NextFunction, Request, Response } from "express";
 
-const filePath = "./src/1-assets/err/err.txt"
+const filePath = "./src/1-assets/log/err.txt"
 
 async function catchAll(err: any, request: Request, response: Response, next: NextFunction) {
 
