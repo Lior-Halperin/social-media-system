@@ -1,5 +1,5 @@
+import tools from '../2-utils/tools';
 interface ISocialCustomerModel {
-  customerId: number;
   firstName: string;
   lastName: string;
   tal: number;
@@ -12,8 +12,10 @@ class SocialCustomerModel {
   private _tal: number;
 
   public constructor(donate: ISocialCustomerModel) {
+    
+    this._customerId = tools.tools.generateId(99999,10000)
     for (const property in donate) {
-      this[property] = donate[property];
+      this[property] = donate[property]
     }
   }
 

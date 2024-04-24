@@ -29,7 +29,7 @@ router.post('/socialCustomer', async (request: Request, response: Response, next
     }
     catch(err: any){
         next(err)
-    }
+    }  
 })
 
 export default router; // Export all routes from this controller.
