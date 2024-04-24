@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 // import Role from "src/models/enums/role";
 
 const SocialCustomerView = React.lazy(() => import("../Views/SocialCustomerView/SocialCustomerListView"));
+const AddSocialCustomerView = React.lazy(() => import("../Views/AddSocialCustomerView/AddSocialCustomerView"));
 
 // const AdminView = React.lazy(
 //   () => import("../Views/Admin/AdminView/AdminView")
@@ -20,6 +21,7 @@ function Routing(): JSX.Element {
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<SocialCustomerView />} />
+        <Route path="/add-customer" element={<AddSocialCustomerView />} />
         {/* <Route
           path="/admin"
           element={
