@@ -8,6 +8,7 @@ import {
 } from "./AddSocialCustomerView.Styled";
 import { useForm } from "react-hook-form";
 import { ISocialCustomerModel } from "src/Models/SocialCustomerModel";
+import useSocialCustomer from "src/hooks/useSocialCustomer";
 
 function AddSocialCustomerView(): JSX.Element {
 
@@ -19,9 +20,15 @@ function AddSocialCustomerView(): JSX.Element {
 
   // Proceed with submission logic here, such as sending data to a backend server
 
+  const {
+      error,
+      isError,
+      addSocialCustomerMutation,
+    } = useSocialCustomer();  
   async function onSubmit(product: ISocialCustomerModel) {
-      try {
+    try {
         //   await productsService.addProduct(product)
+        await addSocialCustomerMutation.mutate(product)
           console.log(product)
           navigate("/")
       }

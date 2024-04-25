@@ -38,19 +38,25 @@ function useSocialCustomer() {
   // React Query's useMutation hook to handle adding a new socialCustomer.
   // It posts the new socialCustomer to the server and, on success, updates the Redux store.
   const addSocialCustomerMutation = useMutation(
-    (newSocialCustomer: ISocialCustomerModel) => 
+    (newSocialCustomer: ISocialCustomerModel) =>
       axios.post("http://localhost:3002/api/socialCustomer", newSocialCustomer),
-        {
-          onSuccess: (data) => {
-            // Dispatch action to add the new socialCustomer to the Redux store
-            dispatch(addSocialCustomer(data.data));
-            // Invalidate 'socialCustomer' query to refetch if necessary, ensuring data consistency
-            queryClient.invalidateQueries("socialCustomer");
-          },
-        }
+    {
+      onSuccess: (data) => {
+        // Dispatch action to add the new socialCustomer to the Redux store
+        dispatch(addSocialCustomer(data.data));
+        // Invalidate 'socialCustomer' query to refetch if necessary, ensuring data consistency
+        queryClient.invalidateQueries("socialCustomer");
+      },
+    }
   );
-    // Return the socialCustomer data, loading state, error state, and mutation function from the hook
-    return { socialCustomer, isLoading, isError, error, addSocialCustomerMutation };
+  // Return the socialCustomer data, loading state, error state, and mutation function from the hook
+  return {
+    socialCustomer,
+    isLoading,
+    isError,
+    error,
+    addSocialCustomerMutation,
+  };
 }
 
 export default useSocialCustomer;
