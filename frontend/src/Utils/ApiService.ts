@@ -1,13 +1,13 @@
 import axios, {AxiosInstance} from "axios";
-import { IConfig } from "./Config";
+import config, { IConfig } from "./Config";
 
 class ApiService<T> {
 private api: AxiosInstance;
 private endpoint: string
 
- constructor(apiConfig:IConfig){
-    this.api = axios.create({baseURL:apiConfig.baseURL})
-    this.endpoint = apiConfig.socialCustomerEndpoint
+ constructor(endpointType: keyof Omit<IConfig,'baseURL'>){
+    this.api = axios.create({baseURL:config.baseURL})
+    this.endpoint = config[`${endpointType}`]
 }
 
 async getAll(): Promise<T[]> {
