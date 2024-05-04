@@ -27,8 +27,7 @@ function AddSocialCustomerView(): JSX.Element {
     } = useSocialCustomer();  
   async function onSubmit(product: ISocialCustomerModel) {
     try {
-        //   await productsService.addProduct(product)
-        await addSocialCustomerMutation.mutate(product)
+         addSocialCustomerMutation.mutate(product)
           console.log(product)
           navigate("/")
       }
