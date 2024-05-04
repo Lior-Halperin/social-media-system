@@ -9,15 +9,15 @@ export interface IConfig {
 
 const environments:any = { 
     development: {
-      baseURL: `${urlDomain.protocol}`+`${urlDomain.domain}`+'api/',
+      baseURL: `${urlDomain.protocol}`+`${urlDomain.domain}`+'api',
       socialCustomerEndpoint:'/socialCustomer',
     },
     test: {
-        baseURL: `${urlDomain.protocol}`+`${urlDomain.domain}`+'api/',
+        baseURL: `${urlDomain.protocol}`+`${urlDomain.domain}`+'api',
         socialCustomerEndpoint:'/socialCustomer',
     },
     production: {
-        baseURL: `${urlDomain.protocol}`+`${urlDomain.domain}`+'api/',
+        baseURL: `${urlDomain.protocol}`+`${urlDomain.domain}`+'api',
         socialCustomerEndpoint:'/socialCustomer',
     }
   }
