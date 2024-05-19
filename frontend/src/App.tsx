@@ -9,37 +9,34 @@ import { StyledWrapper } from "./App.styled";
 import NavBar from "./Components/NavBar/NavBar";
 
 function App() {
-    const [theme, setTheme] = React.useState<DefaultTheme>(darkTheme);
+  const [theme, setTheme] = React.useState<DefaultTheme>(darkTheme);
 
-    const toggleTheme = () => {
-      setTheme(theme === lightTheme ? darkTheme : lightTheme);
-    };
+  const toggleTheme = () => {
+    setTheme(theme === lightTheme ? darkTheme : lightTheme);
+  };
 
-    const navLinks = [
-        { path: "/", namePage: "home" },
-        { path: "/add-customer", namePage: "add customer" },
-      ];
-    
+  const navLinks = [
+    { path: "/", namePage: "home" },
+    { path: "/add-customer", namePage: "add customer" },
+  ];
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-        <StyledWrapper>
-        <Splash/>
+      <StyledWrapper>
+        {/* <Splash/> */}
         <header>
-            heder
-            <button onClick={toggleTheme}>Toggle Theme</button>
-            <NavBar links={navLinks} />
-
+          heder
+          <button onClick={toggleTheme}>Toggle Theme</button>
+          <NavBar links={navLinks} />
         </header>
-        <hr/>
-        < main>
-        <Routing/>
+        <hr />
+        <main>
+          <Routing />
         </main>
-        <hr/>
-        <footer>
-            footer
-        </footer>
-        </StyledWrapper>
+        <hr />
+        <footer>footer</footer>
+      </StyledWrapper>
     </ThemeProvider>
   );
 }
