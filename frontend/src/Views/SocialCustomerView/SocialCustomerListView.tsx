@@ -1,7 +1,7 @@
 import SocialCustomerTable from "src/Components/SocialCustomerTable/SocialCustomerTable";
 import useSocialCustomer from "src/hooks/useSocialCustomer";
 
-function SocialCustomerView(): JSX.Element {
+function SocialCustomerListView(): JSX.Element {
   // Utilize the custom hook to access socialCustomers data and functionalities
   const {
     socialCustomer,
@@ -23,4 +23,4 @@ function SocialCustomerView(): JSX.Element {
   );
 }
 
-export default SocialCustomerView;
+export default SocialCustomerListView;
