@@ -1,5 +1,7 @@
+import { useSelector } from "react-redux";
 import SocialCustomerTable from "src/Components/SocialCustomerTable/SocialCustomerTable";
 import useSocialCustomer from "src/hooks/useSocialCustomer";
+import { RootState } from "src/redux/store";
 
 function SocialCustomerListView(): JSX.Element {
   // Utilize the custom hook to access socialCustomers data and functionalities
@@ -8,17 +10,20 @@ function SocialCustomerListView(): JSX.Element {
     error,
     isError,
     isLoading,
-    addSocialCustomerMutation,
   } = useSocialCustomer();
 
-  // Function to handle new socialCustomer submission
+  // Select the socialCustomer slice from the Redux store
+  const selectedCustomer = useSelector(
+    (state: RootState
+    ) => state.socialCustomer.SelectedCustomer
+  );
 
   if (isLoading) return <div>Loading...</div>;
   //   if (isError) return <div>Error: {error?.message}</div>;
 
   return (
     <>
-      <SocialCustomerTable socialCustomer={socialCustomer} />
+      <SocialCustomerTable socialCustomer={socialCustomer} selectedCustomer={selectedCustomer}/>
     </>
   );
 }
