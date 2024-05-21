@@ -23,7 +23,6 @@ function SocialCustomerTable({socialCustomer,selectedCustomer}: SocialCustomerTa
  
   useEffect(() => {
       setSocialCustomerState(socialCustomer);
-    //   console.log(selectedCustomer)
   }, [socialCustomer]);
 
   const handleCheckboxChange = useCallback((customer: ISocialCustomerModel) => {

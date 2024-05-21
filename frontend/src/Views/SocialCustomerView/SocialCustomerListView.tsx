@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import HoveringButton from "src/Components/HoveringButton/HoveringButton";
 import SocialCustomerTable from "src/Components/SocialCustomerTable/SocialCustomerTable";
 import useSocialCustomer from "src/hooks/useSocialCustomer";
 import { RootState } from "src/redux/store";
@@ -24,6 +25,8 @@ function SocialCustomerListView(): JSX.Element {
   return (
     <>
       <SocialCustomerTable socialCustomer={socialCustomer} selectedCustomer={selectedCustomer}/>
+      <HoveringButton selectedCustomers={selectedCustomer} />
+
     </>
   );
 }
