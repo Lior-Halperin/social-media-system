@@ -8,7 +8,7 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const Button = styled.button`
-  background-color: #007bff;
+background-color: ${(props)=> props.theme.colors.primary};
   color: white;
   border: none;
   border-radius: 50%;
@@ -22,8 +22,8 @@ export const Button = styled.button`
 `;
 
 export const CloseButton = styled.button`
-  background-color: #007bff;
-  color: white;
+background-color: ${(props)=> props.theme.colors.border};
+color: white;
   border: none;
   border-radius: 50%;
   width: 20px;
@@ -44,7 +44,7 @@ export const PopupWrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  background-color: white;
+  background-color: ${(props)=> props.theme.colors.background};
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
