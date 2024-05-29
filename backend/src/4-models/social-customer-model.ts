@@ -5,7 +5,7 @@ interface ISocialCustomerModel {
   tal: number;
 }
 
-class SocialCustomerModel {
+class SocialCustomerModel implements ISocialCustomerModel {
   private _customerId: number;
   private _firstName: string;
   private _lastName: string;
@@ -13,7 +13,7 @@ class SocialCustomerModel {
 
   public constructor(donate: ISocialCustomerModel) {
     
-    this._customerId = tools.tools.generateId(99999,10000)
+    this._customerId = tools.generateId(99999,10000)
     for (const property in donate) {
       this[property] = donate[property]
     }

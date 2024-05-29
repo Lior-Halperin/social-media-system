@@ -4,7 +4,7 @@ import SocialCustomerModel from "../4-models/social-customer-model";
 // Get all socialCustomer
 async function getAllSocialCustomer(): Promise<SocialCustomerModel[]> {
   try {
-    const query = "SELECT * FROM socialCustomer";
+    const query = "SELECT * FROM social_customers";
     const existingSocialCustomer = await dal.execute(query);
     return existingSocialCustomer;
   } catch (err: any) {
@@ -15,19 +15,19 @@ async function getAllSocialCustomer(): Promise<SocialCustomerModel[]> {
 async function addSocialCustomer(customer: SocialCustomerModel): Promise<SocialCustomerModel> {
   try {
     const query =
-      "INSERT INTO socialCustomer (customerId,firstName,lastName,tal) VALUES(?,?,?,?)";
+      "INSERT INTO social_customers (customer_id, first_name, last_name, tal) VALUES(?,?,?,?)";
 
-    const result = await dal.execute(query, [
+    await dal.execute(query, [
       customer.customerId,
       customer.firstName,
       customer.lastName,
       customer.tal,
     ]);
 
-    return result[0]
+    return customer;
   } catch (err: any) {
     throw err;
   }
 }
 
-export default { getAllSocialCustomer,addSocialCustomer };
+export default { getAllSocialCustomer, addSocialCustomer };
