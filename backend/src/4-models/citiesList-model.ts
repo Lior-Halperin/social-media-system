@@ -6,7 +6,7 @@ interface ICitiesListModel {
   citiesList: CityModel[];
   errorsList: { cityId: number; massage: string }[];
 }
-class CitiesListModel {
+class CitiesListModel implements ICitiesListModel{
   private _citiesList: CityModel[];
   private _errorsList: { cityId: number; massage: string }[];
 

@@ -8,7 +8,7 @@ interface ICityModel {
   englishName: string;
   hashDetails: string;
 }
-class CityModel {
+class CityModel implements ICityModel{
   private _cityId: number;
   private _hebrewName: string;
   private _englishName: string;
