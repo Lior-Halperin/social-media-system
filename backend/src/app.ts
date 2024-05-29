@@ -5,6 +5,9 @@ import logRequest from "./3-middlewares/log-request";
 import authController from "./6-controllers/auth-controller";
 import citiesController from "./6-controllers/cities-controller";
 import socialCustomerController from "./6-controllers/social-customer-controller";
+import volunteerProjectsController from "./6-controllers/volunteer-projects-controller";
+import projectsCustomersController from "./6-controllers/projects-customers-controller";
+
 
 import { RouteNotFound } from "./4-models/errors-model";
 import cors from "cors";
@@ -25,6 +28,9 @@ server.use(logRequest);
 server.use("/api",authController);
 server.use("/api",citiesController);
 server.use("/api",socialCustomerController);
+server.use("/api",volunteerProjectsController);
+server.use("/api",projectsCustomersController);
+server.use("/api",projectsCustomersController);
 
 //If route not found:
 server.use("*", (request: Request, response: Response, next: NextFunction) => {
