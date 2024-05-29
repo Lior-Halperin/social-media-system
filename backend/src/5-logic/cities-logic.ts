@@ -72,7 +72,7 @@ async function updateCityChunk(cities: CityModel[]): Promise<void> {
         city.hashDetails,
       ]);
       const placeholders = citiesToInsert.map(() => "(?, ?, ?, ?)").join(", ");
-      const insertQuery = `INSERT INTO cities (cityId, hebrewName, englishName, hashDetails) VALUES ${placeholders}`;
+      const insertQuery = `INSERT INTO cities (city_id, hebrew_name, english_Name, hash_details) VALUES ${placeholders}`;
       await dal.execute(insertQuery, insertValue);
     }
 
@@ -83,11 +83,9 @@ async function updateCityChunk(cities: CityModel[]): Promise<void> {
   }
 }
 
-async function splitCities(
-  cities: CityModel[]
-): Promise<{ citiesToUpdate: CityModel[]; citiesToInsert: CityModel[] }> {
+async function splitCities(cities: CityModel[]): Promise<{ citiesToUpdate: CityModel[]; citiesToInsert: CityModel[] }> {
   try {
-    const query = "SELECT cityId, hashDetails FROM cities WHERE cityId IN (?)";
+    const query = "SELECT city_id, hash_details FROM cities WHERE city_id IN (?)";
     const existingCities = await dal.execute(
       query,
       cities.map((city) => city.cityId)
@@ -119,7 +117,7 @@ async function splitCities(
 
 async function addCity(city: CityModel): Promise<CityModel> {
   try {
-    const query = `INSERT INTO cities(cityId, hebrewName, englishName, hashDetails) VALUES(?,?,?,?)`;
+    const query = `INSERT INTO cities(city_id, hebrew_name, english_name, hash_details) VALUES(?,?,?,?)`;
 
     const result = await dal.execute(query, [
       city.cityId,
@@ -138,7 +136,7 @@ async function addCity(city: CityModel): Promise<CityModel> {
 
 async function getOneCityById(cityId: number): Promise<CityModel> {
   try {
-    const query = `SELECT * FROM cities  WHERE cityId = ${cityId}`;
+    const query = `SELECT * FROM cities  WHERE city_id = ${cityId}`;
 
     const city = await dal.execute(query);
 
@@ -150,7 +148,7 @@ async function getOneCityById(cityId: number): Promise<CityModel> {
 
 async function updatePartialCity(city: CityModel): Promise<void> {
   try {
-    const query = `UPDATE cities SET hebrewName = "${city.hebrewName}", englishName = "${city.englishName}" WHERE cityId = ${city.cityId}`;
+    const query = `UPDATE cities SET hebrew_name = "${city.hebrewName}", english_name = "${city.englishName}" WHERE city_id = ${city.cityId}`;
     await dal.execute(query);
   } catch (err: any) {
     throw err;
