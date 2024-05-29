@@ -1,6 +1,6 @@
 import express, {Request, Response, NextFunction} from 'express';
 import VolunteerProjectModel from '../4-models/volunteer-project-model';
-import logic from '../5-logic/volunteer-projects'
+import logic from '../5-logic/volunteer-projects-logic'
 
 const router = express.Router();
 
