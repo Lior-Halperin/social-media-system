@@ -4,7 +4,7 @@ import SocialCustomerModel from "../4-models/social-customer-model";
 // Get all socialCustomer
 async function getAllSocialCustomer(): Promise<SocialCustomerModel[]> {
   try {
-    const query = "SELECT * FROM social_customers";
+    const query = "SELECT customer_id AS customerId, first_name AS firstName, last_name AS lastName, tal  FROM social_customers";
     const existingSocialCustomer = await dal.execute(query);
     return existingSocialCustomer;
   } catch (err: any) {

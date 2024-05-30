@@ -1,5 +1,6 @@
-import tools from '../2-utils/tools';
+import tools from "../2-utils/tools";
 interface ISocialCustomerModel {
+  customerId: number;
   firstName: string;
   lastName: string;
   tal: number;
@@ -12,10 +13,9 @@ class SocialCustomerModel implements ISocialCustomerModel {
   private _tal: number;
 
   public constructor(donate: ISocialCustomerModel) {
-    
-    this._customerId = tools.generateId(99999,10000)
+    this._customerId = tools.generateId(99999, 10000);
     for (const property in donate) {
-      this[property] = donate[property]
+      this[property] = donate[property];
     }
   }
 
@@ -23,24 +23,24 @@ class SocialCustomerModel implements ISocialCustomerModel {
   public get customerId() {
     return this._customerId;
   }
- 
+
   public get firstName() {
     return this._firstName;
   }
   public set firstName(firstName: string) {
-     this._firstName = firstName;
+    this._firstName = firstName;
   }
   public get lastName() {
     return this._lastName;
   }
   public set lastName(lastName: string) {
-     this._lastName = lastName;
+    this._lastName = lastName;
   }
   public get tal() {
     return this._tal;
   }
   public set tal(tal: number) {
- this._tal = tal;
+    this._tal = tal;
   }
 }
 
