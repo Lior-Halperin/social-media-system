@@ -7,6 +7,12 @@ import Splash from "./Views/Splash/Splash";
 import Routing from "./Components/Routing";
 import { StyledWrapper } from "./App.styled";
 import NavBar from "./Components/NavBar/NavBar";
+import Dropdown from "./Components/Dropdown/Dropdown";
+import useVolunteerProject from "./hooks/useVolunteerProjects";
+interface Option {
+    value: number;
+    label: string;
+}
 
 function App() {
   const [theme, setTheme] = React.useState<DefaultTheme>(darkTheme);
@@ -19,6 +25,14 @@ function App() {
     { path: "/", namePage: "home" },
     { path: "/add-customer", namePage: "add customer" },
   ];
+  const {error,isError,isLoading,volunteerProject} = useVolunteerProject();
+
+  const options: Option[] = volunteerProject.map((project)=>{return{value:project.projectId,label:project.name}})
+;
+
+  const handleSelect = (option: Option) => {
+    console.log('Selected option:', option);
+};
 
   return (
     <ThemeProvider theme={theme}>
@@ -29,6 +43,12 @@ function App() {
           heder
           <button onClick={toggleTheme}>Toggle Theme</button>
           <NavBar links={navLinks} />
+          <Dropdown
+                options={options}
+                onSelect={handleSelect}
+                placeholder="Select an option"
+                renderOption={(option) => <span>{option.label}</span>}
+            />
         </header>
         <hr />
         <main>
