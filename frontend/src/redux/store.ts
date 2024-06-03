@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import socialCustomerReducer from "./features/socialCustomer/socialCustomerSlice";
+import volunteerProjectReducer from "./features/volunteerProjects/volunteerProjectsSlice";
 
 export const store = configureStore({
   reducer: {
     socialCustomer: socialCustomerReducer,
+    volunteerProject : volunteerProjectReducer
   },
 });
 
