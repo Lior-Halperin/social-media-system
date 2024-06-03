@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ISocialCustomerModel } from "src/Models/SocialCustomerModel";
 
 interface SocialCustomerState {
-  SocialCustomer: ISocialCustomerModel[];
-  SelectedCustomer: Record<string, ISocialCustomerModel>;
+  socialCustomer: ISocialCustomerModel[];
+  selectedCustomer: Record<string, ISocialCustomerModel>;
 }
 
 const initialState: SocialCustomerState = {
-  SocialCustomer: [],
-  SelectedCustomer: {},
+  socialCustomer: [],
+  selectedCustomer: {},
 };
 
 const socialCustomerSlice = createSlice({
@@ -19,16 +19,16 @@ const socialCustomerSlice = createSlice({
       state,
       action: PayloadAction<ISocialCustomerModel[]>
     ) => {
-      state.SocialCustomer = action.payload;
+      state.socialCustomer = action.payload;
     },
     setSelectedCustomer: (
       state,
       action: PayloadAction<Record<string, ISocialCustomerModel>>
     ) => {
-      state.SelectedCustomer = action.payload;
+      state.selectedCustomer = action.payload;
     },
     addSocialCustomer: (state, action: PayloadAction<ISocialCustomerModel>) => {
-      state.SocialCustomer.push(action.payload);
+      state.socialCustomer.push(action.payload);
     },
   }, 
 });

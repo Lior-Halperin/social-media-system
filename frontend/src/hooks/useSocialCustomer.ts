@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import axios from "axios";
 import { ISocialCustomerModel } from "src/Models/SocialCustomerModel";
 import {
   setSocialCustomer,
@@ -17,10 +16,12 @@ function useSocialCustomer() {
 
   // Select the socialCustomer slice from the Redux store
   const socialCustomer = useSelector(
-    (state: RootState) => state.socialCustomer.SocialCustomer
+    (state: RootState) => state.socialCustomer.socialCustomer
   );
 
-  const socialCustomerApi = new ApiService<ISocialCustomerModel>('socialCustomerEndpoint')
+  const socialCustomerApi = new ApiService<ISocialCustomerModel>(
+    "socialCustomerEndpoint"
+  );
 
   // React Query's useQuery hook to fetch socialCustomer.
   // If socialCustomer are already present in the Redux store, it uses them as initial data.
@@ -28,7 +29,7 @@ function useSocialCustomer() {
   const { isLoading, isError, error } = useQuery(
     "socialCustomer",
     async () => {
-    const data = await socialCustomerApi.getAll()
+      const data = await socialCustomerApi.getAll();
       // Dispatch action to update Redux store with fetched socialCustomers
       dispatch(setSocialCustomer(data));
       return data;
@@ -40,7 +41,7 @@ function useSocialCustomer() {
   // It posts the new socialCustomer to the server and, on success, updates the Redux store.
   const addSocialCustomerMutation = useMutation(
     (newSocialCustomer: ISocialCustomerModel) =>
-    socialCustomerApi.create(newSocialCustomer),
+      socialCustomerApi.create(newSocialCustomer),
     {
       onSuccess: (data) => {
         // Dispatch action to add the new socialCustomer to the Redux store

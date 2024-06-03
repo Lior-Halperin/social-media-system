@@ -16,7 +16,7 @@ function SocialCustomerListView(): JSX.Element {
   // Select the socialCustomer slice from the Redux store
   const selectedCustomer = useSelector(
     (state: RootState
-    ) => state.socialCustomer.SelectedCustomer
+    ) => state.socialCustomer.selectedCustomer
   );
   
   if (isLoading) return <div>Loading...</div>;
