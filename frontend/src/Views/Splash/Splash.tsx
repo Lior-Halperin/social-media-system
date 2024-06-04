@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Logo, SplashScreenWrapper } from "./Splash.styled";
-import logoImage from "../../assets/logo.jpg";
+import { StyledLogoImage, StyledSplashScreenWrapper } from "./Splash.styled";
 
 function Splash(): JSX.Element | null {
   const [visible, setVisible] = useState(true);
@@ -16,9 +15,9 @@ function Splash(): JSX.Element | null {
   if (!visible) return null;
 
   return (
-    <SplashScreenWrapper>
-      <Logo src={logoImage} alt="Logo" />
-    </SplashScreenWrapper>
+    <StyledSplashScreenWrapper>
+      <StyledLogoImage imageName={'logo'} alt="StyledLogoImage"/>
+    </StyledSplashScreenWrapper>
   );
 }
 

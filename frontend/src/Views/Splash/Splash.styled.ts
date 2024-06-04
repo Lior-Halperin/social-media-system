@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
-
-const fadeAndScale = keyframes`
+    import DynamicImage from "src/Components/DynamicImage/DynamicImage";
+const StyledFadeAndScale = keyframes`
   from {
     opacity: 0;
     transform: scale(0.5);
@@ -11,7 +11,7 @@ const fadeAndScale = keyframes`
   }
 `;
 
-export const SplashScreenWrapper = styled.div`
+export const StyledSplashScreenWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -24,7 +24,7 @@ export const SplashScreenWrapper = styled.div`
   z-index: 9999; /* Ensure it's above other content */
 `;
 
-export const Logo = styled.img`
+export const StyledLogoImage = styled(DynamicImage)`
   width: 100%;
-  animation: ${fadeAndScale} 1.5s ease-in-out forwards;
+  animation: ${StyledFadeAndScale} 1.5s ease-in-out forwards;
 `;
