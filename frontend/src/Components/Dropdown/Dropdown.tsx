@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { StyledDropdownContainer, StyledOptionItem, StyledOptionsList, StyledSelectedOption } from "./Dropdown.styled";
 
 interface DropdownProps<T> {
@@ -12,7 +12,6 @@ interface DropdownProps<T> {
 /* The trailing comma (,) is a syntax detail that helps avoid parsing ambiguity in TypeScript when used with JSX.
 If the TypeScript parser encounters this, it might get confused and interpret <T> as the start of a JSX tag rather than a generic type parameter.
 */
-
     const [isOpen, setIsOpen] = useState(false);
 
     const [selectedOption, setSelectedOption] = useState<T | null>(null);
@@ -41,4 +40,4 @@ If the TypeScript parser encounters this, it might get confused and interpret <T
     );
 };
     
-    export default Dropdown
+    export default memo(Dropdown) as typeof Dropdown;

@@ -1,9 +1,10 @@
-import React, { Suspense } from "react";
+import React, { Suspense, memo } from "react";
 // import { useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 // import AdminRoute from "src/Views/Admin/AdminRoute";
 // import Role from "src/models/enums/role";
 
+const CustomerAddressesView = React.lazy(()=> import('../Views/CustomerAddressesView/CustomerAddressesView'))
 const SocialCustomerView = React.lazy(() => import("../Views/SocialCustomerView/SocialCustomerListView"));
 const AddSocialCustomerView = React.lazy(() => import("../Views/AddSocialCustomerView/AddSocialCustomerView"));
 
@@ -20,7 +21,8 @@ function Routing(): JSX.Element {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        <Route path="/" element={<SocialCustomerView />} />
+        <Route path="/" element={<CustomerAddressesView />} />
+        <Route path="/social-customer" element={<SocialCustomerView />} />
         <Route path="/add-customer" element={<AddSocialCustomerView />} />
         {/* <Route
           path="/admin"
@@ -35,4 +37,4 @@ function Routing(): JSX.Element {
   );
 }
 
-export default Routing;
+export default memo(Routing);

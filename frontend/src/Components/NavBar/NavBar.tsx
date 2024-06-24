@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import StyledWrapper from "./NavBar.styled";
+import { memo } from "react";
 
 interface INavBar {
   path: string;
@@ -19,4 +20,4 @@ function NavBar({ links }: { links: INavBar[] }): JSX.Element {
   );
 }
 
-export default NavBar;
+export default memo(NavBar);
