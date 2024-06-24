@@ -21,7 +21,7 @@ router.post('/projects-customers', async (request: Request, response: Response, 
 //  GET http://localhost:3002/api/projects-customers
 router.get('/projects-customers/:id([0-9]+)', async (request: Request, response: Response, next: NextFunction) => { // upload.single('excelFile'): This is Multer middleware configured to handle a single file upload. The file is expected to come with the form field name excelFile. This middleware processes the incoming file and attaches it to the req (request) object.
     try{
-        const projectId = +request.body.id;
+        const projectId = +request.params.id;
         const projectsCustomers = await logic.getProjectCustomerDetailsByProjectId(projectId)
   
         response.json(projectsCustomers);
