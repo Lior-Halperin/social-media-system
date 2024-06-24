@@ -1,5 +1,5 @@
 export interface IVolunteerProjectModel {
-  projectId: number;
+  project_id: number;
   name: string;
   date: Date;
 }
