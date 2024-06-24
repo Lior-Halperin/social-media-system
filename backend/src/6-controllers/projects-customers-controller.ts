@@ -31,7 +31,7 @@ router.get('/projects-customers/:id([0-9]+)', async (request: Request, response:
       }
   });
 
-  //  GET http://localhost:3002/api/projects-customers
+  //  delete http://localhost:3002/api/projects-customers
 router.delete('/projects-customers', async (request: Request, response: Response, next: NextFunction) => { // upload.single('excelFile'): This is Multer middleware configured to handle a single file upload. The file is expected to come with the form field name excelFile. This middleware processes the incoming file and attaches it to the req (request) object.
     try{
         const projectCustomer = request.body
