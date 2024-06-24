@@ -5,24 +5,29 @@ const urlDomain: UrlDomainModel = new UrlDomainModel("http://localhost:3002");
 export interface IConfig {
   baseURL: string;
   socialCustomerEndpoint: string;
-  volunteerProjectsEndPoint: string;  
+  volunteerProjectsEndPoint: string;
+  projectCustomerEndPoint: string;
 }
 
-const environments: any = {
+type envType = { development: IConfig; test: IConfig; production: IConfig };
+const environments: envType = {
   development: {
     baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` + "api",
     socialCustomerEndpoint: "/socialCustomer",
     volunteerProjectsEndPoint: "/volunteer-projects",
+    projectCustomerEndPoint: "/projects-customers",
   },
   test: {
     baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` + "api",
     socialCustomerEndpoint: "/socialCustomer",
     volunteerProjectsEndPoint: "/volunteer-projects",
+    projectCustomerEndPoint: "/projects-customers",
   },
   production: {
     baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` + "api",
     socialCustomerEndpoint: "/socialCustomer",
     volunteerProjectsEndPoint: "/volunteer-projects",
+    projectCustomerEndPoint: "/projects-customers",
   },
 };
 
