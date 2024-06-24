@@ -9,7 +9,7 @@ import {
 import Checkbox from "../Checkbox/Checkbox";
 
 
-interface GenericTableProps<T extends object> {
+export interface GenericTableProps<T extends object> {
     data: T[];
     selectedItems: Record<string, T>;
     getItemId: (item: T) => number;
@@ -22,6 +22,7 @@ interface GenericTableProps<T extends object> {
     getItemId,
     onSelectedItemsChange,
   }: GenericTableProps<T>): JSX.Element {
+  
     const [tableData, setTableData] = useState<T[]>([]);
   
     useEffect(() => {

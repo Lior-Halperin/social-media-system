@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import { ISocialCustomerModel } from "src/Models/SocialCustomerModel";
-import { Button, ButtonWrapper, CloseButton, Overlay, PopupWrapper } from "./HoveringButton.styled";
-import SocialCustomerTable from "../SocialCustomerTable/SocialCustomerTable";
+import {
+  Button,
+  ButtonWrapper,
+  CloseButton,
+  Overlay,
+  PopupWrapper,
+} from "./HoveringButton.styled";
+import GenericTable, { GenericTableProps } from "../GenericTable/GenericTable";
 
-interface HoveringButtonProps {
-    selectedCustomers: Record<string, ISocialCustomerModel>;
-  }
+interface HoveringButtonProps <T extends object> extends GenericTableProps<T>{}
 
-function HoveringButton({selectedCustomers}:HoveringButtonProps): JSX.Element{
+function HoveringButton<T extends object>({getItemId,onSelectedItemsChange,selectedItems}:HoveringButtonProps<T>): JSX.Element {
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const [isHidden, setIsHidden] = useState<boolean>(false);
 
-    const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-    const [isHidden, setIsHidden] = useState<boolean>(false)
-  
-    const handleButtonClick = () => {
+  const handleButtonClick = () => {
     setIsPopupOpen(true);
   };
 
@@ -20,36 +23,39 @@ function HoveringButton({selectedCustomers}:HoveringButtonProps): JSX.Element{
     setIsPopupOpen(false);
   };
 
-  const selectedCustomersArray = Object.values(selectedCustomers);
+  const selectedCustomersArray = Object.values(selectedItems);
 
-  useEffect(()=>{
-    setIsHidden(selectedCustomersArray.length > 0)
-  }
-    ,[selectedCustomersArray.length])
+  useEffect(() => {
+    setIsHidden(selectedCustomersArray.length > 0);
+  }, [selectedCustomersArray.length]);
 
   return (
     <>
-    {isHidden && (
-    <>
-      <ButtonWrapper>
-        <Button onClick={handleButtonClick}>
-          {selectedCustomersArray.length}
-        </Button>
-      </ButtonWrapper>
-      {isPopupOpen && (
+      {isHidden && (
         <>
-          <Overlay onClick={handleClosePopup} />
-          <PopupWrapper>
-          <CloseButton onClick={handleClosePopup}>X</CloseButton>
-          <SocialCustomerTable socialCustomer={selectedCustomersArray} selectedCustomer={selectedCustomers}/>
-          </PopupWrapper>
+          <ButtonWrapper>
+            <Button onClick={handleButtonClick}>
+              {selectedCustomersArray.length}
+            </Button>
+          </ButtonWrapper>
+          {isPopupOpen && (
+            <>
+              <Overlay onClick={handleClosePopup} />
+              <PopupWrapper>
+                <CloseButton onClick={handleClosePopup}>X</CloseButton>
+                <GenericTable<T>
+                  data={selectedCustomersArray}
+                  selectedItems={selectedItems}
+                  getItemId={getItemId}
+                  onSelectedItemsChange={onSelectedItemsChange}
+                />
+              </PopupWrapper>
+            </>
+          )}
         </>
       )}
-      </>
-    )}
     </>
   );
-
 }
 
-export default HoveringButton
+export default HoveringButton;
