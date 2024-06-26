@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { ISocialCustomerModel } from "src/Models/SocialCustomerModel";
@@ -9,7 +9,7 @@ import {
 import ApiService from "src/Utils/ApiService";
 
 function useSocialCustomer() {
-  // Hook into Redux store for dispatching actions and selecting state
+  // Hook into Redux store for dispatching actions
   const dispatch = useDispatch();
   // React Query's client for managing cache and executing side effects on mutation
   const queryClient = useQueryClient();
@@ -19,41 +19,38 @@ function useSocialCustomer() {
     (state: RootState) => state.socialCustomer.socialCustomer
   );
 
-  const socialCustomerApi = new ApiService<ISocialCustomerModel>(
-    "socialCustomerEndpoint"
-  );
+  // Initialize the API service for social customers
+  const socialCustomerApi = new ApiService<ISocialCustomerModel>("socialCustomerEndpoint");
 
-  // React Query's useQuery hook to fetch socialCustomer.
-  // If socialCustomer are already present in the Redux store, it uses them as initial data.
-  // Otherwise, it fetches socialCustomer from the server and updates the Redux store.
-  const { isLoading, isError, error } = useQuery(
-    "socialCustomer",
-    async () => {
+  // React Query's useQuery hook to fetch social customers.
+  // If social customers are already present in the Redux store, it uses them as initial data.
+  // Otherwise, it fetches social customers from the server and updates the Redux store.
+  const { isLoading, isError, error, data } = useQuery({
+    queryKey: ["socialCustomer"],
+    queryFn: async () => {
       const data = await socialCustomerApi.getAll();
-      // Dispatch action to update Redux store with fetched socialCustomers
+      // Dispatch action to update Redux store with fetched social customers
       dispatch(setSocialCustomer(data));
       return data;
     },
-    { initialData: socialCustomer.length > 0 ? socialCustomer : undefined }
-  );
+    initialData: socialCustomer.length > 0 ? socialCustomer : undefined,
+  });
 
-  // React Query's useMutation hook to handle adding a new socialCustomer.
-  // It posts the new socialCustomer to the server and, on success, updates the Redux store.
-  const addSocialCustomerMutation = useMutation(
-    (newSocialCustomer: ISocialCustomerModel) =>
-      socialCustomerApi.create(newSocialCustomer),
-    {
-      onSuccess: (data) => {
-        // Dispatch action to add the new socialCustomer to the Redux store
-        dispatch(addSocialCustomer(data));
-        // Invalidate 'socialCustomer' query to refetch if necessary, ensuring data consistency
-        queryClient.invalidateQueries("socialCustomer");
-      },
-    }
-  );
-  // Return the socialCustomer data, loading state, error state, and mutation function from the hook
+  // React Query's useMutation hook to handle adding a new social customer.
+  // It posts the new social customer to the server and, on success, updates the Redux store.
+  const addSocialCustomerMutation = useMutation({
+    mutationFn: (newSocialCustomer: ISocialCustomerModel) => socialCustomerApi.create(newSocialCustomer),
+    onSuccess: (data) => {
+      // Dispatch action to add the new social customer to the Redux store
+      dispatch(addSocialCustomer(data));
+      // Invalidate 'socialCustomer' query to refetch if necessary, ensuring data consistency
+      queryClient.invalidateQueries({ queryKey: ["socialCustomer"] });
+    },
+  });
+
+  // Return the social customer data, loading state, error state, and mutation function from the hook
   return {
-    socialCustomer,
+    socialCustomer: data || socialCustomer,
     isLoading,
     isError,
     error,
