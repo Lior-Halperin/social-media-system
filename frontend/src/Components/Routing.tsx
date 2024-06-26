@@ -19,7 +19,7 @@ function Routing(): JSX.Element {
 //   );
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loading...</div>}> {/* React will display loading fallback until all the code and data needed by the children has been loaded. */}
       <Routes>
         <Route path="/" element={<CustomerAddressesView />} />
         <Route path="/social-customer" element={<SocialCustomerView />} />
