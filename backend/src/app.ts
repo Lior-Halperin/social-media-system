@@ -11,37 +11,38 @@ import projectsCustomersController from "./6-controllers/projects-customers-cont
 
 import { RouteNotFound } from "./4-models/errors-model";
 import cors from "cors";
+import socketLogic from "./5-logic/socket-logic";
 
-const server = express();
+const expressServer = express();
 
 //  Backend approval to browse AJAX to backend API
-if (process.env.NODE_ENV === "development") server.use(cors());
+if (process.env.NODE_ENV === "development") expressServer.use(cors());
 
 // Tell express to extract json object from request body into request.body variable:
-server.use(express.json());
+expressServer.use(express.json());
 
 // Middleware to run before controllers:
-server.use(logRequest);
-// server.use(verifyLoggedIn);
+expressServer.use(logRequest);
+// expressServer.use(verifyLoggedIn);
 
 // Transfer requests to the controllers:
-server.use("/api",authController);
-server.use("/api",citiesController);
-server.use("/api",socialCustomerController);
-server.use("/api",volunteerProjectsController);
-server.use("/api",projectsCustomersController);
-server.use("/api",projectsCustomersController);
+expressServer.use("/api",authController);
+expressServer.use("/api",citiesController);
+expressServer.use("/api",socialCustomerController);
+expressServer.use("/api",volunteerProjectsController);
+expressServer.use("/api",projectsCustomersController);
+expressServer.use("/api",projectsCustomersController);
 
 //If route not found:
-server.use("*", (request: Request, response: Response, next: NextFunction) => {
+expressServer.use("*", (request: Request, response: Response, next: NextFunction) => {
   const err = new RouteNotFound(request.method, request.originalUrl);
   next(err);
 });
 
 // Middleware to run if there is an error - must be last:
-server.use(catchAll);
+expressServer.use(catchAll);
 
-server.listen(config.serverPort, () => {
+const httpServer = expressServer.listen(config.serverPort, () => {
     try {
         console.log(`Listening on http://localhost:${config.serverPort}`);
     }    
@@ -49,3 +50,6 @@ server.listen(config.serverPort, () => {
         console.log("Error connecting to database:", err);
     }
     });
+
+
+    socketLogic.init(httpServer)

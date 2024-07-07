@@ -1,5 +1,6 @@
 import dal from "../2-utils/dal";
 import SocialCustomerModel from "../4-models/social-customer-model";
+import socketLogic from "./socket-logic";
 
 // Get all socialCustomer
 async function getAllSocialCustomer(): Promise<SocialCustomerModel[]> {
@@ -24,6 +25,9 @@ async function addSocialCustomer(customer: SocialCustomerModel): Promise<SocialC
       customer.tal,
     ]);
 
+    // Report via socket.io a new social customer has been added:
+    socketLogic.reportAddSocialCustomer(customer)
+    
     return customer;
   } catch (err: any) {
     throw err;
