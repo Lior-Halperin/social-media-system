@@ -7,6 +7,9 @@ import {
   addSocialCustomer,
 } from "src/redux/features/socialCustomer/socialCustomerSlice";
 import ApiService from "src/Utils/ApiService";
+import useSocketIo from "./useSocketIo";
+import config from "src/Utils/Config";
+import SocketEvents from "src/Models/SocketEvents";
 
 function useSocialCustomer() {
   // Hook into Redux store for dispatching actions
@@ -18,7 +21,7 @@ function useSocialCustomer() {
   const socialCustomer = useSelector(
     (state: RootState) => state.socialCustomer.socialCustomer
   );
-
+  
   // Initialize the API service for social customers
   const socialCustomerApi = new ApiService<ISocialCustomerModel>("socialCustomerEndpoint");
 
@@ -48,6 +51,13 @@ function useSocialCustomer() {
     },
   });
 
+  const handleSocketData = (newSocialCustomer: ISocialCustomerModel) =>{
+    dispatch(addSocialCustomer(newSocialCustomer))
+    queryClient.invalidateQueries({queryKey:["socialCustomer"]})
+  }
+
+  useSocketIo(config.baseURL,SocketEvents.AddedSocialCustomer,handleSocketData)
+  
   // Return the social customer data, loading state, error state, and mutation function from the hook
   return {
     socialCustomer: data || socialCustomer,
