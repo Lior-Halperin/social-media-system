@@ -1,6 +1,7 @@
 import { Server as HttpServer } from "http";
 import { Server as SocketServer, Socket } from "socket.io";
 import SocialCustomerModel from "../4-models/social-customer-model";
+import SocketEvents from "../4-models/SocketEvents";
 
 let socketServer: SocketServer;
 
@@ -18,15 +19,13 @@ function init(httpServer: HttpServer): void {
   }
 }
 
-function reportAddSocialCustomer(customer: SocialCustomerModel): void {
-    try{
-        console.log(`${this.name} ${reportAddSocialCustomer.name} - customer: ${JSON.stringify(customer)}`)
-        // Emit the event from the server to the the rest of th users.
-        socketServer.sockets.emit("added-social-customer", customer);
-    }
-    catch(err:any){
-        throw err
-    }
+function reportAddNewData<T>(dataModel: T, socketEvent: SocketEvents): void {
+  try {
+    // Emit the event from the server to the the rest of th users.
+    socketServer.sockets.emit(socketEvent, dataModel);
+  } catch (err: any) {
+    throw err;
+  }
 }
 
-export default {init,reportAddSocialCustomer}
+export default { init, reportAddNewData };
