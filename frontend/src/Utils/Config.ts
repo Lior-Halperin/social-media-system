@@ -12,19 +12,19 @@ export interface IConfig {
 type envType = { development: IConfig; test: IConfig; production: IConfig };
 const environments: envType = {
   development: {
-    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` + "api",
-    socialCustomerEndpoint: "/socialCustomer",
-    volunteerProjectsEndPoint: "/volunteer-projects",
-    projectCustomerEndPoint: "/projects-customers",
+    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` ,
+    socialCustomerEndpoint: "api/socialCustomer",
+    volunteerProjectsEndPoint: "api/volunteer-projects",
+    projectCustomerEndPoint: "api/projects-customers",
   },
   test: {
-    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` + "api",
+    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` ,
     socialCustomerEndpoint: "/socialCustomer",
     volunteerProjectsEndPoint: "/volunteer-projects",
     projectCustomerEndPoint: "/projects-customers",
   },
   production: {
-    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` + "api",
+    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` ,
     socialCustomerEndpoint: "/socialCustomer",
     volunteerProjectsEndPoint: "/volunteer-projects",
     projectCustomerEndPoint: "/projects-customers",

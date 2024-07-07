@@ -11,7 +11,7 @@ function init(httpServer: HttpServer): void {
 
     // Listen to client connection:
     socketServer.sockets.on("connection", (socket: Socket) => {
-      console.log(`client has been connected... user-id: ${socket.id}`);
+      console.log(`client has been connected...`);
     });
   } catch (err: any) {
     throw err;
@@ -20,6 +20,7 @@ function init(httpServer: HttpServer): void {
 
 function reportAddSocialCustomer(customer: SocialCustomerModel): void {
     try{
+        console.log(`${this.name} ${reportAddSocialCustomer.name} - customer: ${JSON.stringify(customer)}`)
         // Emit the event from the server to the the rest of th users.
         socketServer.sockets.emit("added-social-customer", customer);
     }
