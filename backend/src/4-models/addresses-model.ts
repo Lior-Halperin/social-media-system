@@ -8,9 +8,11 @@ interface IAddressesModel {
   houseNumber: string;
   apartmentNumber: number;
   floor: number;
+  longitude: number;
+  latitude: number;
 }
 
-class AddressesModel implements IAddressesModel{
+class AddressesModel implements IAddressesModel {
   private _addressesId: number;
   private _customerId: number;
   private _cityId: number;
@@ -18,6 +20,8 @@ class AddressesModel implements IAddressesModel{
   private _houseNumber: string;
   private _apartmentNumber: number;
   private _floor: number;
+  private _longitude: number;
+  private _latitude: number;
 
   public constructor(address: Omit<IAddressesModel, "addressesId">) {
     this._addressesId = tools.generateId(99999999, 10000000);
@@ -26,6 +30,8 @@ class AddressesModel implements IAddressesModel{
     this._streetId = address.streetId;
     this._houseNumber = address.houseNumber;
     this._floor = address.floor;
+    this._longitude = address.longitude;
+    this._latitude = address.latitude;
   }
 
   public get addressesId() {
@@ -54,6 +60,14 @@ class AddressesModel implements IAddressesModel{
 
   public get floor() {
     return this._floor;
+  }
+
+  public get longitude() {
+    return this._longitude;
+  }
+
+  public get latitude() {
+    return this._latitude;
   }
 }
 
