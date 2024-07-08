@@ -6,6 +6,7 @@ import GenericTable from "src/Components/GenericTable/GenericTable";
 import { setSelectedCustomerAddresses } from "src/redux/features/customerAddresses/customerAddressesSlice";
 import { useCallback } from "react";
 import HoveringButton from "src/Components/HoveringButton/HoveringButton";
+import MapWithAddresses from "src/Components/MapWithAddresses/MapWithAddresses";
 
 function CustomerAddressesView(): JSX.Element {
   // Utilize the custom hook to access customerAddresses data and functionalities
@@ -25,8 +26,10 @@ function CustomerAddressesView(): JSX.Element {
     [dispatch]
   );
 
+  const addressesTest = [{id:1,latitude:31.960709, longitude:34.807861, name:"גלוסקין 16"},{id:1,latitude:31.960244, longitude:34.806016, name:"test2"}]
   return (
     <>
+<MapWithAddresses addresses={addressesTest} mapCenterLandmark={[31.962129, 34.805361]}/>
       <GenericTable<IProjectCustomerDetailsModel>
         data={customerAddresses}
         selectedItems={selectedAddresses}
