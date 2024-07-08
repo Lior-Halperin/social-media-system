@@ -2,7 +2,7 @@ import dal from "../2-utils/dal";
 import ProjectsCustomersModel from "../4-models/projects-customers-model";
 import ProjectCustomerDetailsModel from "../4-models/project-customer-details-model";
 import socketLogic from "./socket-logic";
-import SocketEvents from "../4-models/SocketEvents";
+import SocketEvents from "../4-models/socketEvents";
 
 async function addProjectsCustomers(projectCustomer: ProjectsCustomersModel): Promise<ProjectsCustomersModel> {
   try {

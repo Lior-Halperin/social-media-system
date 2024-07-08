@@ -1,6 +1,6 @@
 import dal from "../2-utils/dal";
 import SocialCustomerModel from "../4-models/social-customer-model";
-import SocketEvents from "../4-models/SocketEvents";
+import SocketEvents from "../4-models/socketEvents";
 import socketLogic from "./socket-logic";
 
 // Get all socialCustomer

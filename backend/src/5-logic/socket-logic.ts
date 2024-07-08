@@ -1,7 +1,7 @@
 import { Server as HttpServer } from "http";
 import { Server as SocketServer, Socket } from "socket.io";
 import SocialCustomerModel from "../4-models/social-customer-model";
-import SocketEvents from "../4-models/SocketEvents";
+import SocketEvents from "../4-models/socketEvents";
 
 let socketServer: SocketServer;
 
