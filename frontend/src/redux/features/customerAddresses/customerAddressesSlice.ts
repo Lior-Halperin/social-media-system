@@ -27,9 +27,15 @@ const customersAddressesSlice = createSlice({
     ) => {
       state.selectedCustomerAddresses = action.payload;
     },
+    addCustomerAddress: (
+      state,
+      action: PayloadAction<IProjectCustomerDetailsModel>
+    ) => {
+      state.customersAddresses.push(action.payload);
+    },
   },
 });
-export const { setCustomerAddresses, setSelectedCustomerAddresses } =
+export const { setCustomerAddresses, setSelectedCustomerAddresses, addCustomerAddress } =
   customersAddressesSlice.actions;
 
 export default customersAddressesSlice.reducer;
