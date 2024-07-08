@@ -1,6 +1,8 @@
 import dal from "../2-utils/dal";
 import ProjectsCustomersModel from "../4-models/projects-customers-model";
 import ProjectCustomerDetailsModel from "../4-models/project-customer-details-model";
+import socketLogic from "./socket-logic";
+import SocketEvents from "../4-models/SocketEvents";
 
 async function addProjectsCustomers(projectCustomer: ProjectsCustomersModel): Promise<ProjectsCustomersModel> {
   try {
@@ -9,6 +11,10 @@ async function addProjectsCustomers(projectCustomer: ProjectsCustomersModel): Pr
       projectCustomer.customerId,
       projectCustomer.projectId,
     ]);
+
+
+    // Report via socket.io a new project customer has been added:
+    socketLogic.reportAddNewData(projectCustomer,SocketEvents.AddedProjectsCustomers)
 
     return projectCustomer;
   } catch (err: any) {
