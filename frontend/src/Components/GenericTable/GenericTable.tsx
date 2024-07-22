@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import {
   StyledWrapper,
   StyleTableRow,
@@ -11,6 +11,7 @@ import {
   StyledInput,
 } from "./GenericTable.styled";
 import Checkbox from "../Checkbox/Checkbox";
+import { Path, SubmitHandler, useForm } from "react-hook-form";
 
 export interface GenericTableProps<T extends object> {
   data: T[];
@@ -28,24 +29,12 @@ function GenericTable<T extends object>({
   const [tableData, setTableData] = useState<T[]>([]);
   const [flippedRow, setFlippedRow] = useState<number | null>(null);
   const [editedData, setEditedData] = useState<Record<number, Partial<T>>>({});
+  const { register, handleSubmit, reset ,formState } = useForm<T>();
+  const editedItem = useRef<string | number | null>(null);
 
   useEffect(() => {
     setTableData(data);
   }, [data]);
-
-  const handleCardClick = (itemId: number) => {
-    setFlippedRow(flippedRow === itemId ? null : itemId);
-  };
-
-  const handleInputChange = (itemId: number, field: keyof T, value: string) => {
-    setEditedData((prevData) => ({
-      ...prevData,
-      [itemId]: {
-        ...prevData[itemId],
-        [field]: value,
-      },
-    }));
-  };
 
   const handleCheckboxChange = useCallback(
     (item: T) => {
@@ -62,7 +51,35 @@ function GenericTable<T extends object>({
     [selectedItems, getItemId, onSelectedItemsChange]
   );
 
-  const tableHeaders = tableData.length > 0 ? Object.keys(tableData[0]) : [];
+  const handleCardClick = (itemId: number) => {
+    if (itemId !== flippedRow) {
+      setFlippedRow(flippedRow === itemId ? null : itemId);
+    }
+  };
+
+  const tableHeaders = useMemo(() => {
+    return data.length > 0 ? Object.keys(data[0]) : [];
+  }, [data]);
+
+  const onSubmit: SubmitHandler<T> = async (formData) => {
+    try {
+      const listEditedItem = Object.keys(formData);
+      const lastEditedItem = listEditedItem[listEditedItem.length - 1];
+      if (editedItem.current === null) {
+        editedItem.current = lastEditedItem;
+        console.log(" send axios request", "item: " + lastEditedItem);
+      } else if (editedItem.current === lastEditedItem) {
+        console.log(1111111);
+      } else if (editedItem.current !== lastEditedItem) {
+        console.log(" send axios request", "item: " + lastEditedItem);
+        reset();
+      }
+      //   await axios.post("/api/update-data", formData);
+      //   onSubmitSuccess();
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  };
 
   if (tableData.length === 0) {
     return <StyledWrapper key={Math.random()}>Loading...</StyledWrapper>;
@@ -70,63 +87,57 @@ function GenericTable<T extends object>({
 
   return (
     <StyledWrapper className="generic-table" key={Math.random()}>
-      <StyledTable>
-        <thead>
-          <StyleTableRow>
-            <StyledTableHeader key={"header"}>{""}</StyledTableHeader>
-            {tableHeaders.map((header) => (
-              <StyledTableHeader key={header}>{header}</StyledTableHeader>
-            ))}
-          </StyleTableRow>
-        </thead>
-        <StyleFlipTbody>
-          {tableData.map((item) => {
-            const itemId = getItemId(item);
-            const isFlipped = flippedRow === itemId;
-            return (
-              <StyleFlipTableRowInner
-                key={itemId}
-                onClick={() => handleCardClick(itemId)}
-              >
-                <td>
-                  <Checkbox
-                    id={`checkbox-${itemId}`}
-                    label=""
-                    checked={!!selectedItems[itemId]}
-                    onChange={() => handleCheckboxChange(item)}
-                  />
-                </td>
-                {tableHeaders.map((header) =>
-                  isFlipped ? (
-                    <StyledFlipTableDataBack
-                      $isflipped={isFlipped} // Use $ prefix for transient props
-                      key={`${itemId}-${header}`}
-                    >
-                      <StyledInput
-                        type="text"
-                        value={String(item[header as keyof T])}
-                        onChange={(e) =>
-                          handleInputChange(
-                            itemId,
-                            header as keyof T,
-                            e.target.value
-                          )
-                        }
-                      />
-                    </StyledFlipTableDataBack>
-                  ) : (
-                    <StyledFlipTableDataFront
-                      key={`${itemId}-${header}`}
-                    >
-                      {String(item[header as keyof T])}
-                    </StyledFlipTableDataFront>
-                  )
-                )}
-              </StyleFlipTableRowInner>
-            );
-          })}
-        </StyleFlipTbody>
-      </StyledTable>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <StyledTable>
+          <thead>
+            <StyleTableRow>
+              <StyledTableHeader key={"header"}>{""}</StyledTableHeader>
+              {tableHeaders.map((header) => (
+                <StyledTableHeader key={header}>{header}</StyledTableHeader>
+              ))}
+            </StyleTableRow>
+          </thead>
+          <StyleFlipTbody>
+            {tableData.map((item) => {
+              const itemId = getItemId(item);
+              const isFlipped = flippedRow === itemId;
+              return (
+                <StyleFlipTableRowInner
+                  key={itemId}
+                  onClick={() => handleCardClick(itemId)} // For flip the card
+                  onBlur={handleSubmit(onSubmit)}
+                >
+                  <td>
+                    <Checkbox
+                      id={`checkbox-${itemId}`}
+                      label=""
+                      checked={!!selectedItems[itemId]}
+                      onChange={() => handleCheckboxChange(item)}
+                    />
+                  </td>
+                  {tableHeaders.map((header) =>
+                    isFlipped ? (
+                      <StyledFlipTableDataBack
+                        $isflipped={isFlipped} // Use $ prefix for transient props
+                        key={`${itemId}-${header}`}
+                      >
+                        <StyledInput
+                          defaultValue={String(item[header as keyof T])}
+                          {...register(`${itemId}.${header}` as Path<T>)}
+                        />
+                      </StyledFlipTableDataBack>
+                    ) : (
+                      <StyledFlipTableDataFront key={`${itemId}-${header}`}>
+                        {String(item[header as keyof T])}
+                      </StyledFlipTableDataFront>
+                    )
+                  )}
+                </StyleFlipTableRowInner>
+              );
+            })}
+          </StyleFlipTbody>
+        </StyledTable>
+      </form>
     </StyledWrapper>
   );
 }

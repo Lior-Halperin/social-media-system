@@ -10,6 +10,8 @@ export const StyledTable = styled.table`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
+export const StyleTableRow = styled.tr``;
+
 export const StyledTableHeader = styled.th`
   padding-top: 12px;
   padding-bottom: 12px;
@@ -18,7 +20,6 @@ export const StyledTableHeader = styled.th`
   padding: 0.5rem;
 `;
 
-export const StyleTableRow = styled.tr``;
 
 export const StyleFlipTbody = styled.tbody`
   background-color: transparent;
