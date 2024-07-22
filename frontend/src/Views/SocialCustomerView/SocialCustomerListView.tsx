@@ -22,9 +22,13 @@ function SocialCustomerListView(): JSX.Element {
     dispatch(setSelectedCustomer(newSelectedItems));
   };
 
+  const updateItem = (item: ISocialCustomerModel)=> {
+    console.log(`send axios request: ${JSON.stringify(item)}`)
+  }
   if (isLoading) return <div>Loading...</div>;
 
   if (isError) return <div>Error: {error?.message}</div>;
+
 
   return (
     <>
@@ -33,6 +37,7 @@ function SocialCustomerListView(): JSX.Element {
         selectedItems={selectedCustomer}
         getItemId={(item) => item.customerId}
         onSelectedItemsChange={handleSelectedItemsChange}
+        onSubmitChange={updateItem}
       />
       <HoveringButton<ISocialCustomerModel>
         data={socialCustomer}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import {
   StyledWrapper,
   StyleTableRow,
@@ -18,6 +18,7 @@ export interface GenericTableProps<T extends object> {
   selectedItems: Record<string, T>;
   getItemId: (item: T) => number;
   onSelectedItemsChange: (selectedItems: Record<string, T>) => void;
+  onSubmitChange?: (item: T) => void;
 }
 
 function GenericTable<T extends object>({
@@ -25,12 +26,11 @@ function GenericTable<T extends object>({
   selectedItems,
   getItemId,
   onSelectedItemsChange,
+  onSubmitChange,
 }: GenericTableProps<T>): JSX.Element {
   const [tableData, setTableData] = useState<T[]>([]);
   const [flippedRow, setFlippedRow] = useState<number | null>(null);
-  const [editedData, setEditedData] = useState<Record<number, Partial<T>>>({});
-  const { register, handleSubmit, reset ,formState } = useForm<T>();
-  const editedItem = useRef<string | number | null>(null);
+  const { register, handleSubmit, reset } = useForm<T>();
 
   useEffect(() => {
     setTableData(data);
@@ -64,18 +64,9 @@ function GenericTable<T extends object>({
   const onSubmit: SubmitHandler<T> = async (formData) => {
     try {
       const listEditedItem = Object.keys(formData);
-      const lastEditedItem = listEditedItem[listEditedItem.length - 1];
-      if (editedItem.current === null) {
-        editedItem.current = lastEditedItem;
-        console.log(" send axios request", "item: " + lastEditedItem);
-      } else if (editedItem.current === lastEditedItem) {
-        console.log(1111111);
-      } else if (editedItem.current !== lastEditedItem) {
-        console.log(" send axios request", "item: " + lastEditedItem);
-        reset();
-      }
-      //   await axios.post("/api/update-data", formData);
-      //   onSubmitSuccess();
+      const lastEditedItem = Object.values(formData)[listEditedItem.length - 1];
+      onSubmitChange && onSubmitChange(lastEditedItem);
+      reset();
     } catch (error) {
       console.error("Error updating data:", error);
     }
@@ -105,7 +96,6 @@ function GenericTable<T extends object>({
                 <StyleFlipTableRowInner
                   key={itemId}
                   onClick={() => handleCardClick(itemId)} // For flip the card
-                  onBlur={handleSubmit(onSubmit)}
                 >
                   <td>
                     <Checkbox
@@ -132,6 +122,11 @@ function GenericTable<T extends object>({
                       </StyledFlipTableDataFront>
                     )
                   )}
+                  <td>
+                    {isFlipped && (
+                      <button onClick={handleSubmit(onSubmit)}>Save</button>
+                    )}
+                  </td>
                 </StyleFlipTableRowInner>
               );
             })}
