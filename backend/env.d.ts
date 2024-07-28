@@ -24,17 +24,19 @@ declare global {
       // Testing environment variables
       DB_TYPE_TEST: string;
       DB_HOST_TEST: string;
-      DB_PORT_TEST: string;
+      DB_PORT_TEST: number;
       DB_NAME_TEST: string;
       DB_USER_TEST: string;
       DB_PASSWORD_TEST: string;
       SERVER_PORT_TEST: number;
 
+      // Geographic-system-API
+      GEOGRAPHIC_API_CITIES: string;
+
       // Cyber
       HASH_SALT: string;
       HASH_ALGORITHM: string;
       JWT_SECRET_KEY: string;
-
     }
   }
 }
