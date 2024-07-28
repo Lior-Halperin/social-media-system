@@ -3,6 +3,7 @@ import CitiesListModel from "../4-models/citiesList-model";
 import CityModel from "../4-models/city-model";
 import { ValidationError } from "../4-models/errors-model";
 
+// Todo - if not it use deleted. (this is an older version. in this version, an excel file is loaded and tables are updated in the DB.)
 async function updateFullCities(cities: CityModel[]): Promise<any> {
   try {
     // step-1: Perform validation for all cities:

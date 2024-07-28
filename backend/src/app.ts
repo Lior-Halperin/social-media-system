@@ -3,7 +3,6 @@ import config from "./2-utils/config";
 import catchAll from "./3-middlewares/catch-all";
 import logRequest from "./3-middlewares/log-request";
 import authController from "./6-controllers/auth-controller";
-import citiesController from "./6-controllers/cities-controller";
 import socialCustomerController from "./6-controllers/social-customer-controller";
 import volunteerProjectsController from "./6-controllers/volunteer-projects-controller";
 import projectsCustomersController from "./6-controllers/projects-customers-controller";
@@ -27,7 +26,6 @@ expressServer.use(logRequest);
 
 // Transfer requests to the controllers:
 expressServer.use("/api",authController);
-expressServer.use("/api",citiesController);
 expressServer.use("/api",socialCustomerController);
 expressServer.use("/api",volunteerProjectsController);
 expressServer.use("/api",projectsCustomersController);

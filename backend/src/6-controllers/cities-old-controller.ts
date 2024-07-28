@@ -1,10 +1,11 @@
 import express, {Request, Response, NextFunction} from 'express';
 import multer from 'multer';
 import * as XLSX from 'xlsx';
-import logic from '../5-logic/cities-logic';
+import logic from '../5-logic/cities-old-logic';
 import CityModel from '../4-models/city-model';
 import fs from "fs/promises";
 
+// Todo - if not it use deleted. (this is an older version. in this version, an excel file is loaded and tables are updated in the DB.)
 const router = express.Router();
 const upload = multer({ dest: './src/1-assets/uploads/cities' }); // The { dest: 'uploads/' } configuration tells Multer to save uploaded files in a directory named uploads in your project's root folder.
 
