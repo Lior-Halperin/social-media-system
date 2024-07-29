@@ -1,4 +1,5 @@
 import axios from "axios";
+import englishHebrewNameModel from "./english-hebrew-name-model";
 
 class CitiesModel {
   private _country: string;
@@ -17,14 +18,15 @@ class CitiesModel {
     return this._citiesUrl;
   }
 
-  async getCitiesList() {
+  async getCitiesList(){
     try {
-      const result = await axios.post(this._citiesUrl, {
+      const result= await axios.get(this._citiesUrl, {
         params: { country: this._country },
       });
       return result;
     } catch (err) {
-      throw err;
+        throw new Error(`Failed to fetch cities: ${err}`);
+        ;
     }
   }
 }
