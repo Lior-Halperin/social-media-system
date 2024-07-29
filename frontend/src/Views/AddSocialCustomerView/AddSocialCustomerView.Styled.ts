@@ -35,3 +35,7 @@ color: red;
 margin-top: -5px;
 margin-bottom: 10px;
 `;
+
+export const StyledSelectInput = styled.select`
+
+`

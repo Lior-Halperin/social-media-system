@@ -4,11 +4,13 @@ import {
   StyledErrorMessage,
   StyledForm,
   StyledInput,
+  StyledSelectInput,
   StyledWrapper,
 } from "./AddSocialCustomerView.Styled";
 import { useForm } from "react-hook-form";
 import { ISocialCustomerModel } from "src/Models/SocialCustomerModel";
 import useSocialCustomer from "src/hooks/useSocialCustomer";
+import useCities from "src/hooks/useCities";
 
 function AddSocialCustomerView(): JSX.Element {
 
@@ -25,6 +27,9 @@ function AddSocialCustomerView(): JSX.Element {
       isError,
       addSocialCustomerMutation,
     } = useSocialCustomer();  
+
+    const {cities} = useCities('israel');
+
   async function onSubmit(product: ISocialCustomerModel) {
     try {
          addSocialCustomerMutation.mutate(product)
@@ -57,6 +62,10 @@ function AddSocialCustomerView(): JSX.Element {
           <StyledErrorMessage>{errors.lastName.message}</StyledErrorMessage>
         )}
 
+        <label htmlFor="city">City:</label>
+        <StyledSelectInput name="cites">
+            {cities.map((city)=> <option>{city.he}</option>)}
+        </StyledSelectInput>
         <label htmlFor="tal">Tal:</label>
         <StyledInput
           id="tal"
