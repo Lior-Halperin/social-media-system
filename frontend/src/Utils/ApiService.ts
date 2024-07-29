@@ -19,7 +19,7 @@ async getAll(): Promise<T[]> {
     }
   }
 
-  async getById(id: number): Promise<T> {
+  async getById(id: number | string): Promise<T> {
     try {
       const response = await this.api.get<T>(`${this.endpoint}/${id}`);
       return response.data;
