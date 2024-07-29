@@ -7,27 +7,31 @@ export interface IConfig {
   socialCustomerEndpoint: string;
   volunteerProjectsEndPoint: string;
   projectCustomerEndPoint: string;
+  citiesEndPoint: string;
 }
 
 type envType = { development: IConfig; test: IConfig; production: IConfig };
 const environments: envType = {
   development: {
-    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` ,
+    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}`,
     socialCustomerEndpoint: "api/socialCustomer",
     volunteerProjectsEndPoint: "api/volunteer-projects",
     projectCustomerEndPoint: "api/projects-customers",
+    citiesEndPoint: "api/cities",
   },
   test: {
-    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` ,
+    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}`,
     socialCustomerEndpoint: "/socialCustomer",
     volunteerProjectsEndPoint: "/volunteer-projects",
     projectCustomerEndPoint: "/projects-customers",
+    citiesEndPoint: "api/cities",
   },
   production: {
-    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}` ,
+    baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}`,
     socialCustomerEndpoint: "/socialCustomer",
     volunteerProjectsEndPoint: "/volunteer-projects",
     projectCustomerEndPoint: "/projects-customers",
+    citiesEndPoint: "api/cities",
   },
 };
 
