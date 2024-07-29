@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import socialCustomerReducer from "./features/socialCustomer/socialCustomerSlice";
 import volunteerProjectReducer from "./features/volunteerProjects/volunteerProjectsSlice";
 import customerAddressesReducer from "./features/customerAddresses/customerAddressesSlice";
+import citiesReducer from "./features/cities/citiesSlice";
 
 export const store = configureStore({
   reducer: {
     socialCustomer: socialCustomerReducer,
     volunteerProject: volunteerProjectReducer,
     customerAddresses: customerAddressesReducer,
+    cities: citiesReducer,
   },
 });
 
