@@ -6,7 +6,7 @@ import authController from "./6-controllers/auth-controller";
 import socialCustomerController from "./6-controllers/social-customer-controller";
 import volunteerProjectsController from "./6-controllers/volunteer-projects-controller";
 import projectsCustomersController from "./6-controllers/projects-customers-controller";
-
+import citiesController from "./6-controllers/cities-controller"
 
 import { RouteNotFound } from "./4-models/errors-model";
 import cors from "cors";
@@ -29,7 +29,7 @@ expressServer.use("/api",authController);
 expressServer.use("/api",socialCustomerController);
 expressServer.use("/api",volunteerProjectsController);
 expressServer.use("/api",projectsCustomersController);
-expressServer.use("/api",projectsCustomersController);
+expressServer.use("/api",citiesController)
 
 //If route not found:
 expressServer.use("*", (request: Request, response: Response, next: NextFunction) => {
