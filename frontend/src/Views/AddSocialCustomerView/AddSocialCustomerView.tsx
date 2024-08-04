@@ -11,35 +11,38 @@ import { useForm } from "react-hook-form";
 import { ISocialCustomerModel } from "src/Models/SocialCustomerModel";
 import useSocialCustomer from "src/hooks/useSocialCustomer";
 import useCities from "src/hooks/useCities";
+import Dropdown from "src/Components/Dropdown/Dropdown";
+import ICitiesModel from "src/Models/CitiesModel";
 
 function AddSocialCustomerView(): JSX.Element {
-
   const navigate = useNavigate();
 
- const { register, handleSubmit, formState: { errors } } = useForm<ISocialCustomerModel>();
-
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ISocialCustomerModel>();
 
   // Proceed with submission logic here, such as sending data to a backend server
 
-  const {
-      error,
-      isError,
-      addSocialCustomerMutation,
-    } = useSocialCustomer();  
+  const { error, isError, addSocialCustomerMutation } = useSocialCustomer();
 
-    const {cities} = useCities('israel');
+  const { cities } = useCities("israel");
+
+  const options: ICitiesModel[] = cities.map((city) => ({
+    en: city.en,
+    he: city.he,
+  }));
 
   async function onSubmit(product: ISocialCustomerModel) {
     try {
-         addSocialCustomerMutation.mutate(product)
-          console.log(product)
-          navigate("/")
-      }
-      catch (err: any) {
-          console.log(err)
-      }
-  };
+      addSocialCustomerMutation.mutate(product);
+      console.log(product);
+      navigate("/");
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
 
   return (
     <StyledWrapper>
@@ -63,9 +66,13 @@ function AddSocialCustomerView(): JSX.Element {
         )}
 
         <label htmlFor="city">City:</label>
-        <StyledSelectInput name="cites">
-            {cities.map((city)=> <option>{city.he}</option>)}
-        </StyledSelectInput>
+
+        <Dropdown
+          options={cities}
+          renderOption={(option) => <span>{option.he}</span>}
+          onSelect={(i) => console.log(i)}
+          placeholder="Select city"
+        />
         <label htmlFor="tal">Tal:</label>
         <StyledInput
           id="tal"
