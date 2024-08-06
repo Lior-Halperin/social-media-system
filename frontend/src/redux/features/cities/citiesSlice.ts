@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import ICitiesModel from "src/Models/CitiesModel";
 
 interface CitiesState {
-  cities: ICitiesModel[];
+  cities: string[];
 }
 const initialState: CitiesState = {
   cities: [],
@@ -12,7 +11,7 @@ const citiesSlice = createSlice({
   name: "cities",
   initialState,
   reducers: {
-    setCities: (state, action: PayloadAction<ICitiesModel[]>) => {
+    setCities: (state, action: PayloadAction<string[]>) => {
       state.cities = action.payload;
     },
   },

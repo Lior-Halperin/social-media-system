@@ -12,7 +12,6 @@ import { ISocialCustomerModel } from "src/Models/SocialCustomerModel";
 import useSocialCustomer from "src/hooks/useSocialCustomer";
 import useCities from "src/hooks/useCities";
 import Dropdown from "src/Components/Dropdown/Dropdown";
-import ICitiesModel from "src/Models/CitiesModel";
 
 function AddSocialCustomerView(): JSX.Element {
   const navigate = useNavigate();
@@ -27,12 +26,7 @@ function AddSocialCustomerView(): JSX.Element {
 
   const { error, isError, addSocialCustomerMutation } = useSocialCustomer();
 
-  const { cities } = useCities("israel");
-
-  const options: ICitiesModel[] = cities.map((city) => ({
-    en: city.en,
-    he: city.he,
-  }));
+  const { cities } = useCities("israel",'he');
 
   async function onSubmit(product: ISocialCustomerModel) {
     try {
@@ -69,7 +63,7 @@ function AddSocialCustomerView(): JSX.Element {
 
         <Dropdown
           options={cities}
-          renderOption={(option) => <span>{option.he}</span>}
+          renderOption={(option) => <span>{option}</span>}
           onSelect={(i) => console.log(i)}
           placeholder="Select city"
         />

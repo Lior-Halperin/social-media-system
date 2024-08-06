@@ -31,7 +31,7 @@ function useCustomerAddresses() {
   const getCustomerAddressesById = async (
     id: number
   ): Promise<IProjectCustomerDetailsModel[]> => {
-    const data = await apiService.getById(id);
+    const data = await apiService.getByParams([id]);
     return data;
   };
 
