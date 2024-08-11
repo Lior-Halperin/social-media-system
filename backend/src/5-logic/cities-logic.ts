@@ -6,7 +6,6 @@ async function getCitiesByCountry(
   language: languageType
 ): Promise<string[]> { // Todo: change the promise type 
   try {
-    console.log(country,language)
     if (!country) {
       throw new ValidationError("Missing 'country' parameter");
     }

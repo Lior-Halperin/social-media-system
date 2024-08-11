@@ -6,7 +6,8 @@ import authController from "./6-controllers/auth-controller";
 import socialCustomerController from "./6-controllers/social-customer-controller";
 import volunteerProjectsController from "./6-controllers/volunteer-projects-controller";
 import projectsCustomersController from "./6-controllers/projects-customers-controller";
-import citiesController from "./6-controllers/cities-controller"
+import citiesController from "./6-controllers/cities-controller";
+import streetsController from "./6-controllers/streets-controller";
 
 import { RouteNotFound } from "./4-models/errors-model";
 import cors from "cors";
@@ -25,29 +26,32 @@ expressServer.use(logRequest);
 // expressServer.use(verifyLoggedIn);
 
 // Transfer requests to the controllers:
-expressServer.use("/api",authController);
-expressServer.use("/api",socialCustomerController);
-expressServer.use("/api",volunteerProjectsController);
-expressServer.use("/api",projectsCustomersController);
-expressServer.use("/api",citiesController)
+expressServer.use("/api", authController);
+expressServer.use("/api", socialCustomerController);
+expressServer.use("/api", volunteerProjectsController);
+expressServer.use("/api", projectsCustomersController);
+// Toto: Maybe unite the streetsController with the citiesController under one name  od addresses.
+expressServer.use("/api", citiesController);
+expressServer.use("/api", streetsController);
 
 //If route not found:
-expressServer.use("*", (request: Request, response: Response, next: NextFunction) => {
-  const err = new RouteNotFound(request.method, request.originalUrl);
-  next(err);
-});
+expressServer.use(
+  "*",
+  (request: Request, response: Response, next: NextFunction) => {
+    const err = new RouteNotFound(request.method, request.originalUrl);
+    next(err);
+  }
+);
 
 // Middleware to run if there is an error - must be last:
 expressServer.use(catchAll);
 
 const httpServer = expressServer.listen(config.serverPort, () => {
-    try {
-        console.log(`Listening on http://localhost:${config.serverPort}`);
-    }    
-    catch (err:any) {
-        console.log("Error connecting to database:", err);
-    }
-    });
+  try {
+    console.log(`Listening on http://localhost:${config.serverPort}`);
+  } catch (err: any) {
+    console.log("Error connecting to database:", err);
+  }
+});
 
-
-    socketLogic.init(httpServer)
+socketLogic.init(httpServer);
