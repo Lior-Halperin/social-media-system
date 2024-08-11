@@ -31,7 +31,7 @@ declare global {
       SERVER_PORT_TEST: number;
 
       // Geographic-system-API
-      GEOGRAPHIC_API_CITIES: string;
+      GEOGRAPHIC_API: string;
 
       // Cyber
       HASH_SALT: string;

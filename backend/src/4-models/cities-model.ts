@@ -8,7 +8,7 @@ class CitiesModel {
 
   constructor(country: string, language: languageType) {
     this._country = country;
-    this._citiesUrl = process.env.GEOGRAPHIC_API_CITIES;
+    this._citiesUrl = `${process.env.GEOGRAPHIC_API}/cities`;
     this._language = language
   }
 
