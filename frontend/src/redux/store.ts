@@ -3,6 +3,7 @@ import socialCustomerReducer from "./features/socialCustomer/socialCustomerSlice
 import volunteerProjectReducer from "./features/volunteerProjects/volunteerProjectsSlice";
 import customerAddressesReducer from "./features/customerAddresses/customerAddressesSlice";
 import citiesReducer from "./features/cities/citiesSlice";
+import streetsReducer from "./features/streets/streetsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     volunteerProject: volunteerProjectReducer,
     customerAddresses: customerAddressesReducer,
     cities: citiesReducer,
+    streets: streetsReducer,
   },
 });
 
