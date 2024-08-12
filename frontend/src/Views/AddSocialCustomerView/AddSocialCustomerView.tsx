@@ -12,6 +12,8 @@ import { ISocialCustomerModel } from "src/Models/SocialCustomerModel";
 import useSocialCustomer from "src/hooks/useSocialCustomer";
 import useCities from "src/hooks/useCities";
 import Dropdown from "src/Components/Dropdown/Dropdown";
+import useStreets from "src/hooks/useStreets";
+import { useCallback, useState } from "react";
 
 function AddSocialCustomerView(): JSX.Element {
   const navigate = useNavigate();
@@ -22,11 +24,21 @@ function AddSocialCustomerView(): JSX.Element {
     formState: { errors },
   } = useForm<ISocialCustomerModel>();
 
-  // Proceed with submission logic here, such as sending data to a backend server
+  const [selectedCity, setSelectedCity] = useState<string>('')
 
+  const handelSelectedCity = useCallback((city:string)=>{
+    try{
+        console.log(`Selected city: ${city}`)
+        setSelectedCity(city)
+    }
+    catch(err){
+        console.log(err)
+    }
+  },[])
   const { error, isError, addSocialCustomerMutation } = useSocialCustomer();
 
-  const { cities } = useCities("israel",'he');
+  const citiesResponse = useCities("israel", "he"); // Todo: 
+  const streetsList = useStreets("israel", selectedCity); 
 
   async function onSubmit(product: ISocialCustomerModel) {
     try {
@@ -62,11 +74,20 @@ function AddSocialCustomerView(): JSX.Element {
         <label htmlFor="city">City:</label>
 
         <Dropdown
-          options={cities}
+          options={citiesResponse.cities}
           renderOption={(option) => <span>{option}</span>}
-          onSelect={(i) => console.log(i)}
-          placeholder="Select city"
+          onSelect={(i) => handelSelectedCity(i)}
+          placeholder= {citiesResponse.isLoading ? "Loading cities..":"Select city"}
         />
+
+        {selectedCity && 
+                <Dropdown
+                options={streetsList.streets.streets}
+                renderOption={(option) => <span>{option}</span>}
+                onSelect={(i) => console.log(i)}
+                placeholder={streetsList.isLoading ? "Loading streets..." : "Select street"}
+              />
+        }
         <label htmlFor="tal">Tal:</label>
         <StyledInput
           id="tal"
