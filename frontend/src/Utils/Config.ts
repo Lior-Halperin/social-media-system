@@ -8,6 +8,7 @@ export interface IConfig {
   volunteerProjectsEndPoint: string;
   projectCustomerEndPoint: string;
   citiesEndPoint: string;
+streetsEndPoint: string
 }
 
 type envType = { development: IConfig; test: IConfig; production: IConfig };
@@ -18,6 +19,7 @@ const environments: envType = {
     volunteerProjectsEndPoint: "api/volunteer-projects",
     projectCustomerEndPoint: "api/projects-customers",
     citiesEndPoint: "api/cities",
+    streetsEndPoint: "api/streets"
   },
   test: {
     baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}`,
@@ -25,6 +27,7 @@ const environments: envType = {
     volunteerProjectsEndPoint: "/volunteer-projects",
     projectCustomerEndPoint: "/projects-customers",
     citiesEndPoint: "api/cities",
+    streetsEndPoint: "api/streets"
   },
   production: {
     baseURL: `${urlDomain.protocol}` + `${urlDomain.domain}`,
@@ -32,6 +35,7 @@ const environments: envType = {
     volunteerProjectsEndPoint: "/volunteer-projects",
     projectCustomerEndPoint: "/projects-customers",
     citiesEndPoint: "api/cities",
+    streetsEndPoint: "api/streets"
   },
 };
 
