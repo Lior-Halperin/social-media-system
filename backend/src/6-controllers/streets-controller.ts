@@ -1,13 +1,15 @@
 import express,{Request,Response,NextFunction} from 'express'
-// import logic from '../5-logic/cities-logic'
+import logic from '../5-logic/streets-logic'
+import StreetsModel from '../4-models/streets-model';
 const router = express.Router()
 
-// http://localhost:3002/api/cities/israel
-router.get("/streets/:city/:street", async (request: Request, response: Response, next: NextFunction) => {
+// http://localhost:3002/api/streets/israel/Eilat   
+router.get("/streets/:country/:city", async (request: Request, response: Response, next: NextFunction) => {
     try {
-        const {country, street} = request.params;
-        // const streets = await logic.getStreetsByCountry(country, street)
-        // response.json(streets);
+        const {country, city} = request.params;
+        const street = new StreetsModel(country,city)
+        const streets = await logic.getStreetsByCity(street)
+        response.json(streets);
     }
     catch (err: any) {
         next(err);

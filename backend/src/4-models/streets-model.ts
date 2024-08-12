@@ -8,6 +8,7 @@ class StreetsModel {
   constructor(country: string, city: string) {
     this._city = city;
     this._country = country;
+    this._streetsUrl =  `${process.env.GEOGRAPHIC_API}/streets`
   }
 
   get country(): string {
