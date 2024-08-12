@@ -22,7 +22,6 @@ async getAll(): Promise<T[]> {
   async getByParams(params: (number | string)[]): Promise<T> {
     try {
       const response = await this.api.get<T>(`${this.endpoint}/${params.join('/')}`);
-    //   const response = await this.api.get<T>(`${this.endpoint}/${params}`);
       return response.data;
     } catch (error) {
       throw error;

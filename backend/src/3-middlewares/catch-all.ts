@@ -20,6 +20,8 @@ async function catchAll(err: any, request: Request, response: Response, next: Ne
 
         await fs.appendFile(filePath, data);
     }
+    
+    console.log(err)
 
     response.status(status).send(message);
 

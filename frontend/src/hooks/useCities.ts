@@ -30,12 +30,13 @@ function useCities(country: string, language: languageType) {
     initialData: cities.length > 0 ? cities : undefined,
   });
 
-  return {
+  const citiesResponse = {
     cities: data || cities,
     isLoading,
     isError,
     error,
-  };
+  }
+  return citiesResponse;
 }
 
 export default useCities;
