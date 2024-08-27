@@ -16,48 +16,38 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    IF NOT EXISTS cities (
-        city_id INT PRIMARY KEY AUTO_INCREMENT,
-        hebrew_name VARCHAR(30) NOT NULL,
-        english_name VARCHAR(50) NOT NULL,
-        hash_details VARCHAR(512)
-    );
-
-CREATE TABLE
-    IF NOT EXISTS streets (
-        street_id INT PRIMARY KEY AUTO_INCREMENT,
-        city_id INT NOT NULL,
-        hebrew_name VARCHAR(30) NOT NULL,
-        english_name VARCHAR(50) NOT NULL,
-        FOREIGN KEY (city_id) REFERENCES cities (city_id) ON DELETE CASCADE,
-        INDEX (city_id)
-    );
-
-CREATE TABLE
     IF NOT EXISTS social_customers (
         customer_id INT PRIMARY KEY AUTO_INCREMENT,
         first_name VARCHAR(30) NOT NULL,
         last_name VARCHAR(30) NOT NULL,
-        tal INT
+        update_date DATE NOT NULL,         
     );
 
 CREATE TABLE
     IF NOT EXISTS addresses (
         address_id INT PRIMARY KEY AUTO_INCREMENT,
         customer_id INT NOT NULL,
-        city_id INT NOT NULL,
-        street_id INT NOT NULL,
-        house_number VARCHAR(3) NOT NULL,
+        country: string DEFAULT israel,
+        city: VARCHAR(30) NOT NULL,
+        street VARCHAR(30) NOT NULL,
+        house_number VARCHAR(4) NOT NULL,
         apartment_number INT,
         floor INT NOT NULL,
         longitude INT NOT NULL,
         latitude INT NOT NULL,
+        distance_km_from_jerusalem INT,
+        update_date DATE NOT NULL, 
+        comments VARCHAR(100),        
         FOREIGN KEY (customer_id) REFERENCES social_customers (customer_id) ON DELETE CASCADE,
-        FOREIGN KEY (city_id) REFERENCES cities (city_id) ON DELETE CASCADE,
-        FOREIGN KEY (street_id) REFERENCES streets (street_id) ON DELETE CASCADE,
-        INDEX (customer_id),
-        INDEX (city_id),
-        INDEX (street_id)
+        INDEX (customer_id)
+    );
+
+CREATE TABLE
+    IF NOT EXISTS phone (
+        phone_id: INT PRIMARY KEY AUTO_INCREMENT,
+        customer_id: INT NOT NULL,
+        phone_number: INT NOT NULL,
+        INDEX (customer_id)
     );
 
 CREATE TABLE
