@@ -3,19 +3,17 @@ interface ISocialCustomerModel {
   customerId: number;
   firstName: string;
   lastName: string;
-  tal: number;
 }
 
 class SocialCustomerModel implements ISocialCustomerModel {
   private _customerId: number;
   private _firstName: string;
   private _lastName: string;
-  private _tal: number;
 
-  public constructor(donate: ISocialCustomerModel) {
+  public constructor(customer: ISocialCustomerModel) {
     this._customerId = tools.generateId(99999, 10000);
-    for (const property in donate) {
-      this[property] = donate[property];
+    for (const property in customer) {
+      this[property] = customer[property];
     }
   }
 
@@ -35,12 +33,6 @@ class SocialCustomerModel implements ISocialCustomerModel {
   }
   public set lastName(lastName: string) {
     this._lastName = lastName;
-  }
-  public get tal() {
-    return this._tal;
-  }
-  public set tal(tal: number) {
-    this._tal = tal;
   }
 }
 

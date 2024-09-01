@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
 import logic from "../5-logic/social-customer-logic";
 import SocialCustomerModel from "../4-models/social-customer-model";
+import AddressesModel from "../4-models/addresses-model";
+import TelModel from "../4-models/tel-model";
 
 const router = express.Router();
 
@@ -20,8 +22,12 @@ router.get("/socialCustomer", async (request: Request, response: Response, next:
 // POST http://localhost:3001/api/socialCustomer
 router.post("/socialCustomer", async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const socialCustomer = new SocialCustomerModel(request.body);
-      const addedSocialCustomer = await logic.addSocialCustomer(socialCustomer);
+      const {customer, tel, address} = request.body;
+      
+      const newCustomer = new SocialCustomerModel(customer);
+      const newTel = new TelModel(tel)
+      const newAddress = new AddressesModel(address)
+      const addedSocialCustomer = await logic.addSocialCustomer(newCustomer,newTel, newAddress);
 
       response.json(addedSocialCustomer);
     } catch (err: any) {
