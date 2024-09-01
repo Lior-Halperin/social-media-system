@@ -2,7 +2,7 @@ import dal from "../2-utils/dal";
 import ProjectsCustomersModel from "../4-models/projects-customers-model";
 import ProjectCustomerDetailsModel from "../4-models/project-customer-details-model";
 import socketLogic from "./socket-logic";
-import SocketEvents from "../4-models/socketEvents";
+import SocketEvents from "../4-models/SocketEvents";
 
 async function addProjectsCustomers(projectCustomer: ProjectsCustomersModel): Promise<ProjectsCustomersModel> {
   try {
@@ -39,11 +39,3 @@ async function deleteProjectCustomerByCustomerId(projectCustomer: ProjectsCustom
 }
 
 export default { addProjectsCustomers, getProjectCustomerDetailsByProjectId, deleteProjectCustomerByCustomerId };
-
-//SELECT * from `projects_customers` JOIN `socialcustomer` ON projects_customers.customerId = socialcustomer.customerId;
-
-// SELECT * FROM socialcustomer s JOIN addresses a ON s.customerId = a.customerId
-
-// INSERT INTO streets (city_id, hebrew_name, english_name) VALUES (10, 'נורדאו', 'nordeu') ;
-
-// INSERT INTO addresses (customerId, city_id, streetId, houseNumber, floor) VALUES (3, 10, 0, 30, 1);

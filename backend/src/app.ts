@@ -9,7 +9,7 @@ import projectsCustomersController from "./6-controllers/projects-customers-cont
 import citiesController from "./6-controllers/cities-controller";
 import streetsController from "./6-controllers/streets-controller";
 
-import { RouteNotFound } from "./4-models/errors-model";
+import { RouteNotFoundError } from "./4-models/errors-model";
 import cors from "cors";
 import socketLogic from "./5-logic/socket-logic";
 
@@ -38,7 +38,7 @@ expressServer.use("/api", streetsController);
 expressServer.use(
   "*",
   (request: Request, response: Response, next: NextFunction) => {
-    const err = new RouteNotFound(request.method, request.originalUrl);
+    const err = new RouteNotFoundError(request.method, request.originalUrl);
     next(err);
   }
 );

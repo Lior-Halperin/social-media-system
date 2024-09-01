@@ -10,14 +10,14 @@ class ClientError{
 }
 
 // Frontend requesting resource with id we don't have:
-export class ResourceNotFound extends ClientError {
+export class ResourceNotFoundError extends ClientError {
     public constructor (id: number){
         super(404, `id ${id} not found`) // The super keyword is used to call the constructor of its parent class to access the parent's properties.
     }
 }
 
 // Frontend requesting a non existing route:
-export class RouteNotFound extends ClientError {
+export class RouteNotFoundError extends ClientError {
     public constructor(route: string, method: string){
         super (404, `Route ${route} on method ${method} not exist`);
     }
