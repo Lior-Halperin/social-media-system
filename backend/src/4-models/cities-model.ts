@@ -1,15 +1,15 @@
-import axios from "axios";
+import dal from "../2-utils/dal";
 
-export type languageType = 'he' | 'en'
+export type languageType = "he" | "en";
 class CitiesModel {
   private _country: string;
-  private _language: languageType
+  private _language: languageType;
   private _citiesUrl: string;
 
   constructor(country: string, language: languageType) {
     this._country = country;
     this._citiesUrl = `${process.env.GEOGRAPHIC_API}/cities`;
-    this._language = language
+    this._language = language;
   }
 
   get country(): string {
@@ -20,19 +20,21 @@ class CitiesModel {
     return this._citiesUrl;
   }
 
-  get language(): languageType{
-    return this._language
+  get language(): languageType {
+    return this._language;
   }
 
-  async getCitiesList(){
+  async getCitiesList() { // Todo: Move to business logic
     try {
-      const result= await axios.get(this._citiesUrl, {
-        params: { country: this._country , language: this._language},
+      const result = await dal.api({
+        method: "GET",
+        url: "geographicApi",
+        endpoint: `cities`,
+        config: {params: { country: this._country , language: this._language}}
       });
       return result;
     } catch (err) {
-        throw new Error(`Failed to fetch cities: ${err}`);
-        ;
+      throw new Error(`Failed to fetch cities: ${err}`);
     }
   }
 }

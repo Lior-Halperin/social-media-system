@@ -6,9 +6,8 @@ interface IProjectCustomerDetailsModel  {
     customerId: number;
     customerFirstName: string;
     customerLastName: string;
-    customerTal?: number;
+    customerTel?: number;
     streetId: number;
-    streetHebrewName: string;
     addressId: number;
     houseNumber: string;
     apartmentNumber?: number;
@@ -22,9 +21,8 @@ class ProjectCustomerDetailsModel implements IProjectCustomerDetailsModel{
     private _customerId: number;
     private _customerFirstName: string;
     private _customerLastName: string;
-    private _customerTal?: number;
+    private _customerTel?: number;
     private _streetId: number;
-    private _streetHebrewName: string;
     private _addressId: number;
     private _houseNumber: string;
     private _apartmentNumber?: number;
@@ -37,9 +35,8 @@ class ProjectCustomerDetailsModel implements IProjectCustomerDetailsModel{
         this._customerId = details.customerId;
         this._customerFirstName = details.customerFirstName;
         this._customerLastName = details.customerLastName;
-        this._customerTal = details.customerTal;
+        this._customerTel = details.customerTel;
         this._streetId = details.streetId;
-        this._streetHebrewName = details.streetHebrewName;
         this._addressId = details.addressId;
         this._houseNumber = details.houseNumber;
         this._apartmentNumber = details.apartmentNumber;
@@ -69,16 +66,12 @@ class ProjectCustomerDetailsModel implements IProjectCustomerDetailsModel{
         return this._customerLastName;
       }
     
-      public get customerTal() {
-        return this._customerTal;
+      public get customerTel() {
+        return this._customerTel;
       }
     
       public get streetId() {
         return this._streetId;
-      }
-    
-      public get streetHebrewName() {
-        return this._streetHebrewName;
       }
     
       public get addressId() {
