@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import GenericTable from "src/Components/GenericTable/GenericTable";
 import { setSelectedCustomerAddresses } from "src/redux/features/customerAddresses/customerAddressesSlice";
-import { useCallback } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import HoveringButton from "src/Components/HoveringButton/HoveringButton";
 import MapWithAddresses from "src/Components/MapWithAddresses/MapWithAddresses";
 
@@ -26,10 +26,24 @@ function CustomerAddressesView(): JSX.Element {
     [dispatch]
   );
 
-  const addressesTest = [{id:1,latitude:31.960709, longitude:34.807861, name:"גלוסקין 16"},{id:1,latitude:31.960244, longitude:34.806016, name:"test2"}]
+  const mappedAddresses = useMemo(
+    () =>
+      customerAddresses.flatMap((ad) => [
+        {
+          id: ad.addressId,
+          name: `${ad.firstName} ${ad.lastName}`,
+          latitude: ad.latitude,
+          longitude: ad.longitude,
+        },
+      ]),
+    [customerAddresses]
+  );
   return (
     <>
-<MapWithAddresses addresses={addressesTest} mapCenterLandmark={[31.962129, 34.805361]}/>
+      <MapWithAddresses
+        addresses={mappedAddresses}
+        mapCenterLandmark={[31.962129, 34.805361]}
+      />
       <GenericTable<IProjectCustomerDetailsModel>
         data={customerAddresses}
         selectedItems={selectedAddresses}

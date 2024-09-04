@@ -1,19 +1,19 @@
 interface IProjectCustomerDetailsModel {
   projectId: number;
-  projectName: string;
-  projectDate: Date;
   customerId: number;
-  customerFirstName: string;
-  customerLastName: string;
-  customerTal?: number;
-  streetId: number;
-  streetHebrewName: string;
+  firstName: string;
+  lastName: string;
   addressId: number;
-  houseNumber: string;
-  apartmentNumber?: number;
+  country: string;
+  city: string;
+  street: string;
+  houseNumber: number;
+  apartmentNumber: number;
   floor: number;
   longitude: number;
   latitude: number;
+  distanceKmFromIntentionalPoint: number;
+  addressUpdateDate: Date;
+  comments: string;
 }
-
 export default IProjectCustomerDetailsModel;
