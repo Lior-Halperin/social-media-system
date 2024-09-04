@@ -38,7 +38,7 @@ async function addAddress(address: AddressesModel, dbConnection: PoolConnection)
       const sqlQuery =
         "INSERT INTO addresses (address_id, customer_id, country, city, street, house_number, apartment_number, floor, longitude, latitude, update_date, distance_km_from_intentional_point, comments) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
       await dal.execute(sqlQuery, [
-        address.addressesId,
+        address.addressId,
         address.customerId,
         address.country,
         address.city,

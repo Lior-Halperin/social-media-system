@@ -12,7 +12,7 @@ interface IAddressesModel {
 }
 
 class AddressesModel implements IAddressesModel {
-  private _addressesId: number;
+  private _addressId: number;
   private _customerId: number;
   private _country: string;
   private _city: string;
@@ -22,12 +22,12 @@ class AddressesModel implements IAddressesModel {
   private _floor: number;
   private _longitude: number;
   private _latitude: number;
-  private _updateDate: string; 
+  private _updateDate: string;
   private _distanceKmIntentionalPoint: number;
   private _comments?: string;
 
   public constructor(address: IAddressesModel) {
-    this._addressesId = tools.generateId(99999999, 10000000);
+    this._addressId = tools.generateId(99999999, 10000000);
     this._customerId = address.customerId;
     this._country = address.country ? address.country : "israel";
     this._city = address.city;
@@ -36,11 +36,11 @@ class AddressesModel implements IAddressesModel {
     this._apartmentNumber = address.apartmentNumber;
     this._floor = address.floor;
     this._comments = address.comments;
-    this._updateDate =  new Date().toISOString().split('T')[0];;
-}
+    this._updateDate = new Date().toISOString().split("T")[0];
+  }
 
-  public get addressesId() {
-    return this._addressesId;
+  public get addressId() {
+    return this._addressId;
   }
 
   public get customerId() {
@@ -80,18 +80,18 @@ class AddressesModel implements IAddressesModel {
   public get longitude() {
     return this._longitude;
   }
-  public set longitude(lon:number){
-    this._longitude = lon
+  public set longitude(lon: number) {
+    this._longitude = lon;
   }
- 
+
   public get latitude() {
     return this._latitude;
   }
 
   public set latitude(lat: number) {
-    this._latitude = lat
+    this._latitude = lat;
   }
-  
+
   public get updateDate() {
     return this._updateDate;
   }
@@ -101,7 +101,7 @@ class AddressesModel implements IAddressesModel {
   }
 
   public set distanceKmIntentionalPoint(distance: number) {
-     this._distanceKmIntentionalPoint = distance
+    this._distanceKmIntentionalPoint = distance;
   }
 
   public get comments() {
