@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { setSelectedVolunteerProject } from "./redux/features/volunteerProjects/volunteerProjectsSlice";
 import { IVolunteerProjectModel } from "./Models/VolunteerProjectModel";
 import useCustomerAddresses from "./hooks/useCustomerAddresses";
+import ExcelTable from "./Components/ExcelTable/ExcelTable";
 
 function App() {
 
@@ -73,6 +74,7 @@ function App() {
         <header>
           header
           <button onClick={toggleTheme}>Toggle Theme</button>
+          <ExcelTable/>
           <NavBar links={navLinks} />
           <Dropdown
             options={options}
