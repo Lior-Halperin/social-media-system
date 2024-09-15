@@ -1,0 +1,1 @@
+export type ReadExcelFileType =  { Header: string; accessor: string }

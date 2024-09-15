@@ -3,13 +3,14 @@ import * as XLSX from "xlsx";
 import ColumnMatchingPopup from "../ColumnMatchingPopup/ColumnMatchingPopup";
 import DataTable from "../DataTable/DataTable";
 import ExcelAddressesModel from "src/Models/AddressesListModel";
+import { ReadExcelFileType } from "src/Types/ReadExcelFileType";
 
 function ExcelTable(): React.ReactElement {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<any[]>([]); // Todo: change the any type
   const [headers, setHeaders] = useState<string[]>([]);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [columnMatches, setColumnMatches] = useState<
-    { Header: string; accessor: string }[]
+  ReadExcelFileType[]
   >([]);
 const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -57,7 +58,7 @@ const fileInputRef = useRef<HTMLInputElement>(null);
   }, []);
 
   const handleConfirm = (
-    columnMatches: { Header: string; accessor: string }[]
+    columnMatches: ReadExcelFileType[]
   ) => {
     setColumnMatches(columnMatches);
     setShowPopup(false)

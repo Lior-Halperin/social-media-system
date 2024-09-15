@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable } from "react-table";
+import { ReadExcelFileType } from "src/Types/ReadExcelFileType";
 
 interface DataTableProps {
   data: any[];
-  columns: { Header: string; accessor: string }[];
+  columns: ReadExcelFileType[];
 }
 
 const DataTable: React.FC<DataTableProps> = ({ data, columns }) => {
