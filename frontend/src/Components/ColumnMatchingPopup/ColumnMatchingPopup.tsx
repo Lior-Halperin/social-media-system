@@ -5,11 +5,10 @@ interface ColumnMatchingPopupProps {
   headers: string[];
   dataKeysModel : string[]
   onClose: (value: string) => void;
-  open: boolean
   confirm: (columnMatches: { Header: string, accessor: string }[]) => void
 }
 
-const ColumnMatchingPopup: React.FC<ColumnMatchingPopupProps> = ({ headers, dataKeysModel, onClose, open, confirm }) => {
+const ColumnMatchingPopup: React.FC<ColumnMatchingPopupProps> = ({ headers, dataKeysModel, onClose, confirm }) => {
   const [columnMatches, setColumnMatches] = useState<{ Header: string; accessor: string }[]>([]);
   const [selectedValues, setSelectedValues] = useState<Set<string>>(new Set());
 
@@ -32,7 +31,6 @@ const ColumnMatchingPopup: React.FC<ColumnMatchingPopupProps> = ({ headers, data
   };
 
   const handleConfirm = () => {
-    // Handle confirmed column matching 
     confirm(columnMatches)
 
     // Implement the logic to proceed with the matched columns
@@ -42,9 +40,9 @@ const ColumnMatchingPopup: React.FC<ColumnMatchingPopupProps> = ({ headers, data
     onClose('columnMatches');
   };
 
-
   return (
-    <Dialog open={open} onClose={handleClose}>
+    // <Dialog open={showPopup} onClose={handleClose}>
+    <Dialog open={true} onClose={handleClose}>
       <DialogTitle>Match Columns</DialogTitle>
       <DialogContent>
         {dataKeysModel.map((header, idx) => (
