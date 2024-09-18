@@ -9,7 +9,7 @@ import Popup from "../Popup/Popup";
 function ExcelTable(): React.ReactElement {
   const [data, setData] = useState<any[]>([]); // Todo: change the any type
   const [headers, setHeaders] = useState<string[]>([]);
-  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [showPopup, setShowPopup] = useState<{matching: boolean, table: boolean}>({matching: false, table: false});
   const [columnMatches, setColumnMatches] = useState<ReadExcelFileType[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -41,7 +41,7 @@ function ExcelTable(): React.ReactElement {
 
           setHeaders(headerRow);
           setData(formattedData); // Correctly structured data
-          setShowPopup(true); // Show popup for column matching
+          setShowPopup(prev => ({...prev, matching: true})); // Show popup for column matching
         };
         reader.readAsBinaryString(file);
         if (fileInputRef.current) {
@@ -52,15 +52,18 @@ function ExcelTable(): React.ReactElement {
     [showPopup]
   );
 
-  const handleClickClose = useCallback(() => {
-    setShowPopup(false);
+  const handleClickClose = useCallback((popupType: "matching" | "table") => {
+    setShowPopup(prev => ({...prev, [popupType]: false}));
   }, []);
 
-  const handleConfirm = (columnMatches: ReadExcelFileType[]) => {
+  const handleConfirm = (columnMatches: ReadExcelFileType[],popupType: "matching" | "table" ) => {
     setColumnMatches(columnMatches);
-    setShowPopup(false);
-  };
+    setShowPopup(prev => ({...prev, [popupType]: false}));
+    if(popupType === "matching"){
+      setShowPopup(prev => ({...prev, table: true}));
+    }
 
+  };
   return (
     <div>
       <input
@@ -69,7 +72,7 @@ function ExcelTable(): React.ReactElement {
         onChange={handleFileUpload}
         ref={fileInputRef}
       />
-      {showPopup && (
+      {showPopup.matching && (
         <ColumnMatchingPopup
           confirm={handleConfirm}
           onClose={handleClickClose}
@@ -78,8 +81,8 @@ function ExcelTable(): React.ReactElement {
         />
       )}
 
-      {data.length > 0 && columnMatches.length > 0 ? (
-        <Popup onClose={handleClickClose} onContinue={()=>{}} title="Uploaded file">
+      {showPopup.table && columnMatches.length > 0 ? (
+        <Popup onClose={()=>{handleClickClose("table")}} onContinue={()=>{handleClickClose("table")}} title="Uploaded file">
             <DataTable data={data} columns={columnMatches} />
         </Popup>
       ) : (

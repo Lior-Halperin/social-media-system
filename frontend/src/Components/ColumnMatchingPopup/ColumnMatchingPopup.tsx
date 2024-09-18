@@ -5,8 +5,8 @@ import Popup from "../Popup/Popup";
 interface ColumnMatchingPopupProps {
   headers: string[];
   dataKeysModel: string[];
-  onClose: (value: string) => void;
-  confirm: (columnMatches: { Header: string; accessor: string }[]) => void;
+  onClose: (value: "matching" | "table") => void;
+  confirm: (columnMatches: { Header: string; accessor: string }[],popupType: "matching" | "table") => void;
 }
 
 const ColumnMatchingPopup: React.FC<ColumnMatchingPopupProps> = ({
@@ -41,13 +41,13 @@ const ColumnMatchingPopup: React.FC<ColumnMatchingPopupProps> = ({
   };
 
   const handleConfirm = () => {
-    confirm(columnMatches);
+    confirm(columnMatches,"matching");
 
     // Implement the logic to proceed with the matched columns
   };
 
   const handleClose = () => {
-    onClose("columnMatches");
+    onClose("matching");
   };
 
   return (
