@@ -1,15 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Select, MenuItem } from '@mui/material';
+import React, { useState } from "react";
+import { Select, MenuItem } from "@mui/material";
+import Popup from "../Popup/Popup";
 
 interface ColumnMatchingPopupProps {
   headers: string[];
-  dataKeysModel : string[]
+  dataKeysModel: string[];
   onClose: (value: string) => void;
-  confirm: (columnMatches: { Header: string, accessor: string }[]) => void
+  confirm: (columnMatches: { Header: string; accessor: string }[]) => void;
 }
 
-const ColumnMatchingPopup: React.FC<ColumnMatchingPopupProps> = ({ headers, dataKeysModel, onClose, confirm }) => {
-  const [columnMatches, setColumnMatches] = useState<{ Header: string; accessor: string }[]>([]);
+const ColumnMatchingPopup: React.FC<ColumnMatchingPopupProps> = ({
+  headers,
+  dataKeysModel,
+  onClose,
+  confirm,
+}) => {
+  const [columnMatches, setColumnMatches] = useState<
+    { Header: string; accessor: string }[]
+  >([]);
   const [selectedValues, setSelectedValues] = useState<Set<string>>(new Set());
 
   const handleMatchChange = (excelColumn: string, modelColumn: string) => {
@@ -23,7 +31,9 @@ const ColumnMatchingPopup: React.FC<ColumnMatchingPopupProps> = ({ headers, data
 
     setSelectedValues((prev) => {
       const newSelected = new Set(prev);
-      const oldValue = columnMatches.find((match) => match.Header === excelColumn)?.accessor;
+      const oldValue = columnMatches.find(
+        (match) => match.Header === excelColumn
+      )?.accessor;
       if (oldValue) newSelected.delete(oldValue);
       if (modelColumn) newSelected.add(modelColumn);
       return newSelected;
@@ -31,48 +41,56 @@ const ColumnMatchingPopup: React.FC<ColumnMatchingPopupProps> = ({ headers, data
   };
 
   const handleConfirm = () => {
-    confirm(columnMatches)
+    confirm(columnMatches);
 
     // Implement the logic to proceed with the matched columns
   };
-  
+
   const handleClose = () => {
-    onClose('columnMatches');
+    onClose("columnMatches");
   };
 
   return (
-    // <Dialog open={showPopup} onClose={handleClose}>
-    <Dialog open={true} onClose={handleClose}>
-      <DialogTitle>Match Columns</DialogTitle>
-      <DialogContent>
-        {dataKeysModel.map((header, idx) => (
-          <div key={idx}>
-            <span>{header}:</span>
-            <Select
-              value={columnMatches.find((match) => match.Header === header)?.accessor || ''}
-              onChange={(e) => handleMatchChange(header, e.target.value as string)}
-              fullWidth
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {headers.map((col) => (
-                <MenuItem 
-                  key={col} 
-                  value={col}
-                  disabled={selectedValues.has(col) && columnMatches.find((match) => match.Header === header)?.accessor !== col}
-                >
-                  {col}
+    <>
+      <Popup
+        title="Match Columns"
+        onClose={handleClose}
+        onContinue={handleConfirm}
+      >
+          {dataKeysModel.map((header, idx) => (
+            <div key={idx}>
+              <span>{header}:</span>
+              <Select
+                value={
+                  columnMatches.find((match) => match.Header === header)
+                    ?.accessor || ""
+                }
+                onChange={(e) =>
+                  handleMatchChange(header, e.target.value as string)
+                }
+                fullWidth
+              >
+                <MenuItem value="">
+                  <em>None</em>
                 </MenuItem>
-              ))}
-            </Select>
-          </div>
-        ))}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleConfirm}>Confirm</Button>
-      </DialogActions>
-    </Dialog>
+                {headers.map((col) => (
+                  <MenuItem
+                    key={col}
+                    value={col}
+                    disabled={
+                      selectedValues.has(col) &&
+                      columnMatches.find((match) => match.Header === header)
+                        ?.accessor !== col
+                    }
+                  >
+                    {col}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+          ))}
+      </Popup>
+    </>
   );
 };
 

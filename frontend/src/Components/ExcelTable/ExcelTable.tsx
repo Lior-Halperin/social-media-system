@@ -4,15 +4,14 @@ import ColumnMatchingPopup from "../ColumnMatchingPopup/ColumnMatchingPopup";
 import DataTable from "../DataTable/DataTable";
 import ExcelAddressesModel from "src/Models/AddressesListModel";
 import { ReadExcelFileType } from "src/Types/ReadExcelFileType";
+import Popup from "../Popup/Popup";
 
 function ExcelTable(): React.ReactElement {
   const [data, setData] = useState<any[]>([]); // Todo: change the any type
   const [headers, setHeaders] = useState<string[]>([]);
   const [showPopup, setShowPopup] = useState<boolean>(false);
-  const [columnMatches, setColumnMatches] = useState<
-  ReadExcelFileType[]
-  >([]);
-const fileInputRef = useRef<HTMLInputElement>(null);
+  const [columnMatches, setColumnMatches] = useState<ReadExcelFileType[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const excelAddresses = new ExcelAddressesModel();
 
@@ -46,7 +45,7 @@ const fileInputRef = useRef<HTMLInputElement>(null);
         };
         reader.readAsBinaryString(file);
         if (fileInputRef.current) {
-          fileInputRef.current.value = '';
+          fileInputRef.current.value = "";
         }
       }
     },
@@ -57,27 +56,32 @@ const fileInputRef = useRef<HTMLInputElement>(null);
     setShowPopup(false);
   }, []);
 
-  const handleConfirm = (
-    columnMatches: ReadExcelFileType[]
-  ) => {
+  const handleConfirm = (columnMatches: ReadExcelFileType[]) => {
     setColumnMatches(columnMatches);
-    setShowPopup(false)
+    setShowPopup(false);
   };
 
   return (
     <div>
-      <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} ref={fileInputRef}/>
-      {showPopup && 
-            <ColumnMatchingPopup
-            confirm={handleConfirm}
-            onClose={handleClickClose}
-            dataKeysModel={Object.keys(excelAddresses)}
-            headers={headers}
-          />
-      }
+      <input
+        type="file"
+        accept=".xlsx, .xls"
+        onChange={handleFileUpload}
+        ref={fileInputRef}
+      />
+      {showPopup && (
+        <ColumnMatchingPopup
+          confirm={handleConfirm}
+          onClose={handleClickClose}
+          dataKeysModel={Object.keys(excelAddresses)}
+          headers={headers}
+        />
+      )}
 
-      {data.length > 0 && columnMatches ? (
-        <DataTable data={data} columns={columnMatches} />
+      {data.length > 0 && columnMatches.length > 0 ? (
+        <Popup onClose={handleClickClose} onContinue={()=>{}} title="Uploaded file">
+            <DataTable data={data} columns={columnMatches} />
+        </Popup>
       ) : (
         <p>Upload your file.</p>
       )}
