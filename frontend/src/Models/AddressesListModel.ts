@@ -1,9 +1,8 @@
 class ExcelAddressesModel {
-  public projectId: number;
+  public id: number;
   public firstName: string;
   public lastName: string;
   public country: string;
-  public city: string;
   public street: string;
   public houseNumber: string;
   public apartmentNumber: string;
@@ -11,11 +10,10 @@ class ExcelAddressesModel {
   public comments?: string;
 
   constructor() {
-    this.projectId = 0;
+    this.id = Math.floor(Math.random() * 1000000);
     this.firstName = "";
     this.lastName = "";
     this.country = "";
-    this.city = "";
     this.street = "";
     this.houseNumber = "";
     this.apartmentNumber = "";
