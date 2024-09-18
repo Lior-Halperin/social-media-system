@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useTable } from "react-table";
+import React from "react";
+import { useTable, Column } from "react-table";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import { ReadExcelFileType } from "src/Types/ReadExcelFileType";
 
 interface DataTableProps {
@@ -8,36 +9,37 @@ interface DataTableProps {
 }
 
 const DataTable: React.FC<DataTableProps> = ({ data, columns }) => {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-        columns,
-      data,
-    });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
+    columns: columns as Column<any>[],
+    data,
+  });
 
   return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => (
-                <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+    <TableContainer component={Paper}>
+      <Table {...getTableProps()} aria-label="data table">
+        <TableHead>
+          {headerGroups.map((headerGroup) => (
+            <TableRow {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <TableCell {...column.getHeaderProps()}>{column.render("Header")}</TableCell>
               ))}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+            </TableRow>
+          ))}
+        </TableHead>
+        <TableBody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <TableRow {...row.getRowProps()}>
+                {row.cells.map((cell) => (
+                  <TableCell {...cell.getCellProps()}>{cell.render("Cell")}</TableCell>
+                ))}
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
