@@ -1,22 +1,23 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import {
-  StyledWrapper,
-  StyleTableRow,
-  StyledTable,
-  StyledTableHeader,
-  StyleFlipTbody,
-  StyleFlipTableRowInner,
-  StyledFlipTableDataFront,
-  StyledFlipTableDataBack,
-  StyledInput,
-} from "./GenericTable.styled";
-import Checkbox from "../Checkbox/Checkbox";
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Checkbox,
+  TextField,
+  Button,
+  Box,
+} from "@mui/material";
 import { Path, SubmitHandler, useForm } from "react-hook-form";
 
 export interface GenericTableProps<T extends object> {
   data: T[];
   selectedItems: Record<string, T>;
-  getItemId: (item: T) => number;
+  getItemId: (item: T) => number ;
   onSelectedItemsChange: (selectedItems: Record<string, T>) => void;
   onSubmitChange?: (item: T) => void;
 }
@@ -73,67 +74,72 @@ function GenericTable<T extends object>({
   };
 
   if (tableData.length === 0) {
-    return <StyledWrapper key={Math.random()}>Loading...</StyledWrapper>;
+    return <Box>Loading...</Box>;
   }
 
   return (
-    <StyledWrapper className="generic-table" key={Math.random()}>
+    <TableContainer component={Paper}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledTable>
-          <thead>
-            <StyleTableRow>
-              <StyledTableHeader key={"header"}>{""}</StyledTableHeader>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell padding="checkbox"></TableCell>
               {tableHeaders.map((header) => (
-                <StyledTableHeader key={header}>{header}</StyledTableHeader>
+                <TableCell key={header}>{header}</TableCell>
               ))}
-            </StyleTableRow>
-          </thead>
-          <StyleFlipTbody>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {tableData.map((item) => {
               const itemId = getItemId(item);
               const isFlipped = flippedRow === itemId;
               return (
-                <StyleFlipTableRowInner
+                <TableRow
                   key={itemId}
-                  onClick={() => handleCardClick(itemId)} // For flip the card
+                  onClick={() => handleCardClick(itemId)}
+                  hover
                 >
-                  <td>
+                  <TableCell padding="checkbox">
                     <Checkbox
-                      id={`checkbox-${itemId}`}
-                      label=""
                       checked={!!selectedItems[itemId]}
                       onChange={() => handleCheckboxChange(item)}
                     />
-                  </td>
+                  </TableCell>
                   {tableHeaders.map((header) =>
                     isFlipped ? (
-                      <StyledFlipTableDataBack
-                        $isflipped={isFlipped} // Use $ prefix for transient props
-                        key={`${itemId}-${header}`}
-                      >
-                        <StyledInput
+                      <TableCell key={`${itemId}-${header}`}>
+                        <TextField
                           defaultValue={String(item[header as keyof T])}
                           {...register(`${itemId}.${header}` as Path<T>)}
+                          variant="standard"
+                          fullWidth
                         />
-                      </StyledFlipTableDataBack>
+                      </TableCell>
                     ) : (
-                      <StyledFlipTableDataFront key={`${itemId}-${header}`}>
+                      <TableCell key={`${itemId}-${header}`}>
                         {String(item[header as keyof T])}
-                      </StyledFlipTableDataFront>
+                      </TableCell>
                     )
                   )}
-                  <td>
+                  <TableCell>
                     {isFlipped && (
-                      <button onClick={handleSubmit(onSubmit)}>Save</button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit(onSubmit)}
+                      >
+                        Save
+                      </Button>
                     )}
-                  </td>
-                </StyleFlipTableRowInner>
+                  </TableCell>
+                </TableRow>
               );
             })}
-          </StyleFlipTbody>
-        </StyledTable>
+          </TableBody>
+        </Table>
       </form>
-    </StyledWrapper>
+    </TableContainer>
   );
 }
 
