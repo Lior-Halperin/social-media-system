@@ -14,7 +14,7 @@ router.get("/socialCustomer", async (request: Request, response: Response, next:
       //Return all socialCustomer:
       response.status(201).json(socialCustomer);
     } catch (err: any) {
-      next(err);
+      next(err); 
     }
   }
 );
@@ -27,7 +27,7 @@ router.post("/socialCustomer", async (request: Request, response: Response, next
       const newCustomer = new SocialCustomerModel(customer);
       const newTel = new TelModel(tel)
       const newAddress = new AddressesModel(address)
-      const addedSocialCustomer = await logic.addSocialCustomer(newCustomer,newTel, newAddress);
+      const addedSocialCustomer = await logic.addSocialCustomer(newCustomer,[newTel], newAddress);
 
       response.json(addedSocialCustomer);
     } catch (err: any) {
@@ -36,4 +36,18 @@ router.post("/socialCustomer", async (request: Request, response: Response, next
   }
 );
 
+// POST http://localhost:3001/api/socialCustomerList
+router.post("/socialCustomerList", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        console.log('socialCustomerList')
+
+      const {customers} = request.body;
+      const addedSocialCustomer = await logic.addListOfSocialCustomer(customers);
+
+      response.json(addedSocialCustomer);
+    } catch (err: any) {
+      next(err);
+    }
+  }
+);
 export default router; // Export all routes from this controller.

@@ -1,0 +1,36 @@
+{
+  "customers": [
+    {
+      "customer": {
+        "firstName": "omri",
+        "lastName": "ben"
+      },
+      "address": {
+        "country": "israel",
+        "city": "ראשון לציון",
+        "street": "נורדאו",
+        "houseNumber": "6",
+        "apartmentNumber": 4,
+        "floor": 9,
+        "comments": "להניח מחוץ לדלת"
+      },
+      "tels": [55252, 35585]
+    },
+    {
+        "customer": {
+          "firstName": "limor",
+          "lastName": "hadad"
+        },
+        "address": {
+          "country": "israel",
+          "city": "ראשון לציון",
+          "street": "סמילנסקי",
+          "houseNumber": "10",
+          "apartmentNumber": 3,
+          "floor": 5,
+          "comments": "לא לדפוק בדלת"
+        },
+        "tels": [525353512, 532528878]
+      }
+  ]
+}
