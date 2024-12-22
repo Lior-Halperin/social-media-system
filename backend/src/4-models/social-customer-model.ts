@@ -1,6 +1,5 @@
 import tools from "../2-utils/tools";
-interface ISocialCustomerModel {
-  customerId: number;
+export interface ISocialCustomerModel {
   firstName: string;
   lastName: string;
 }
@@ -11,7 +10,7 @@ class SocialCustomerModel implements ISocialCustomerModel {
   private _lastName: string;
 
   public constructor(customer: ISocialCustomerModel) {
-    this._customerId = tools.generateId(99999, 10000);
+    this._customerId = tools.generateId(99999, 10000); // Todo - use uuid
     for (const property in customer) {
       this[property] = customer[property];
     }

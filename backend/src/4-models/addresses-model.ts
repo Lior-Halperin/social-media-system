@@ -1,6 +1,6 @@
 import tools from "../2-utils/tools";
 
-interface IAddressesModel {
+export interface IAddressesModel {
   customerId: number;
   country?: string;
   city: string;
