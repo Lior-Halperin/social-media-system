@@ -3,10 +3,12 @@ import SocialCustomerModel from "../4-models/social-customer-model";
 import SocketEvents from "../4-models/SocketEvents";
 import telLogic from "./tel-logic";
 import addressesLogic from "./addresses-logic";
+import projectsCustomersLogic from "./projects-customers-logic";
 import socketLogic from "./socket-logic";
 import AddressesModel, { IAddressesModel } from "../4-models/addresses-model";
 import SocialCustomerItemModel from "../4-models/social-customer-item-model";
 import TelModel from "../4-models/tel-model";
+import ProjectsCustomersModel from "../4-models/projects-customers-model";
 
 // Get all socialCustomer
 async function getAllSocialCustomer(): Promise<SocialCustomerModel[]> {
@@ -23,8 +25,10 @@ async function getAllSocialCustomer(): Promise<SocialCustomerModel[]> {
 async function addSocialCustomer(
   customer: SocialCustomerModel,
   tel: TelModel[],
-  address: AddressesModel
-): Promise<any> { // Todo - Change the any type.
+  address: AddressesModel,
+  projectCustomer: ProjectsCustomersModel
+): Promise<any> {
+  // Todo - Change the any type.
   const connection = await dal.getConnection();
 
   try {
@@ -40,19 +44,23 @@ async function addSocialCustomer(
     );
 
     // 2. Add new telephone to the tel table in the DB.
-    for (let i = 0; i < tel.length; i++){
-        tel[i].customerId = customer.customerId;
-        await telLogic.addTel(tel[i], connection);
-    }    
-   
+    for (let i = 0; i < tel.length; i++) {
+      tel[i].customerId = customer.customerId;
+      await telLogic.addTel(tel[i], connection);
+    }
 
     // 3. Add new address to the address table in the DB.
     address.customerId = customer.customerId;
     await addressesLogic.addAddress(address, connection);
 
+
+    
     // Commit transaction if all queries succeed
     await dal.commitTransaction(connection);
 
+    // 4. Associating a customer with a project in the DB.
+    await projectsCustomersLogic.addProjectsCustomers(projectCustomer);
+    
     // Report via socket.io a new social customer has been added:
     socketLogic.reportAddNewData(customer, SocketEvents.AddedSocialCustomer);
 
@@ -75,9 +83,14 @@ async function addListOfSocialCustomer(customers: SocialCustomerItemModel[]) {
     customerItem.address["customerId"] = socialCustomer.customerId;
     const addressToAdd = customerItem.address as IAddressesModel;
     const newAddress = new AddressesModel(addressToAdd); // Create address object.
-    const newTelList: TelModel[] = []; 
+    const newProjectCustomer = new ProjectsCustomersModel({
+      customerId: socialCustomer.customerId,
+      projectId: customerItem.projectId,
+    });
 
-    // Create phone object from the array of phone numbers. 
+    const newTelList: TelModel[] = [];
+
+    // Create phone object from the array of phone numbers.
     for (let i = 0; i < customerItem.tels.length; i++) {
       const newTel = new TelModel({
         customerId: socialCustomer.customerId,
@@ -86,7 +99,12 @@ async function addListOfSocialCustomer(customers: SocialCustomerItemModel[]) {
       newTelList.push(newTel);
     }
 
-      await addSocialCustomer(socialCustomer, newTelList, newAddress);
+    await addSocialCustomer(
+      socialCustomer,
+      newTelList,
+      newAddress,
+      newProjectCustomer
+    );
   }
 }
 

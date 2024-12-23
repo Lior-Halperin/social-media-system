@@ -7,6 +7,7 @@ interface ISocialCustomerItemModel {
   customer: ISocialCustomerModel;
   address: Omit<IAddressesModel, "customerId">;
   tels: number[];
+  projectId: number;
 }
 
 class SocialCustomerItemModel {
@@ -16,13 +17,16 @@ class SocialCustomerItemModel {
 
   private _tels: number[];
 
+  private _projectId: number;
+
   constructor(socialCustomer: ISocialCustomerItemModel) {
     this._customer = socialCustomer.customer;
     this._address = socialCustomer.address;
     this._tels = socialCustomer.tels;
+    this._projectId = socialCustomer.projectId;
   }
 
-    // Todo: add validation
+  // Todo: add validation
 
   get customer() {
     return this._customer;
@@ -44,6 +48,14 @@ class SocialCustomerItemModel {
 
   set tels(telsItem: number[]) {
     this.tels = telsItem;
+  }
+
+  get projectId() {
+    return this._projectId;
+  }
+
+  set projectId(projectIdItem: number) {
+    this.projectId = projectIdItem;
   }
 }
 

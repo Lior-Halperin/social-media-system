@@ -8,6 +8,7 @@ async function addProjectsCustomers(
   projectCustomer: ProjectsCustomersModel
 ): Promise<ProjectsCustomersModel> {
   try {
+    console.log(addProjectsCustomers.name)
     const query = `INSERT INTO projects_customers(customer_id, project_id) VALUES(?,?)`;
     await dal.execute(query, [
       projectCustomer.customerId,
